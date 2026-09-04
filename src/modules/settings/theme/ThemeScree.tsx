@@ -44,7 +44,7 @@ const ThemeScreen = () => {
                     Appearance
                 </Text>
 
-                <View className="overflow-hidden rounded-2xl border border-border bg-surface">
+                <View className="overflow-hidden rounded-2xl border border-border bg-card">
                     {themeOptions.map((option, index) => {
                         const Icon = option.icon;
                         const isSelected = theme === option.value;

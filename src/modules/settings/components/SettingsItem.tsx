@@ -1,3 +1,4 @@
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { ChevronRight } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 
@@ -17,13 +18,14 @@ const SettingsItem = ({
     icon: Icon,
     onPress,
 }: SettingsItemProps) => {
+    const colors = useThemeColors();
     return (
         <Pressable
             onPress={onPress}
-            className="mb-2 flex-row items-center rounded-2xl border border-border bg-surface px-4 py-3 active:opacity-70"
+            className="mb-2 flex-row items-center rounded-2xl border border-border bg-card px-4 py-3"
         >
             <View className="mr-4 h-10 w-10 items-center justify-center rounded-xl bg-primary/5">
-                <Icon size={20} color="#2563eb" />
+                <Icon size={20} color={colors.primary} />
             </View>
 
             <View className="flex-1">
@@ -40,7 +42,7 @@ const SettingsItem = ({
 
             <ChevronRight
                 size={20}
-                className="ml-3 text-muted-foreground"
+                color={colors.mutedForeground}
             />
         </Pressable>
     );

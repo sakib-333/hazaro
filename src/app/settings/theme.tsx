@@ -1,4 +1,4 @@
-import ThemeScreen from "@/modules/settings/theme/screen/ThemeScree";
+import ThemeScreen from "@/modules/settings/theme/ThemeScree";
 
 const ThemeRoute = () => {
     return (

@@ -1,3 +1,4 @@
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { EllipsisVertical } from "lucide-react-native";
 import { useMemo, useState } from "react";
 import { FlatList, Pressable, Text, TextInput, View } from "react-native";
@@ -8,6 +9,7 @@ import { demoData } from "../demo-data/demo.data";
 
 const ViewGamesScreen = () => {
     const [searchQuery, setSearchQuery] = useState("");
+    const colors = useThemeColors();
 
     const filteredData = useMemo(() => {
         const query = searchQuery.toLowerCase();
@@ -32,7 +34,7 @@ const ViewGamesScreen = () => {
                     Hazaro
                 </Text>
                 <Pressable>
-                    <EllipsisVertical  />
+                    <EllipsisVertical color={colors.mutedForeground} />
                 </Pressable>
             </View>
 
@@ -41,8 +43,8 @@ const ViewGamesScreen = () => {
                 ListHeaderComponent={
                     <TextInput
                         placeholder="Search games..."
-                        placeholderTextColor="#64748B"
-                        className="my-4 h-12 rounded-xl border border-border bg-surface px-4 text-base text-foreground"
+                        placeholderTextColor={colors.mutedForeground}
+                        className="mb-4 h-12 rounded-xl border border-border bg-card px-4 text-base text-foreground"
                         value={searchQuery}
                         onChangeText={setSearchQuery}
                     />

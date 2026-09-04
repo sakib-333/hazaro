@@ -1,3 +1,5 @@
+import { useThemeColors } from "@/hooks/useThemeColors";
+import { formatDateTime } from "@/utils/formattedDate";
 import { ChevronRight } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 
@@ -8,16 +10,13 @@ type GameCardProps = {
 };
 
 const GameCard = ({ name, createdAt, onPress }: GameCardProps) => {
-    const formattedDate = new Date(createdAt).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-    });
+
+    const colors = useThemeColors();
 
     return (
         <Pressable
             onPress={onPress}
-            className="mb-3 rounded-2xl border border-border bg-card px-4 py-4 active:opacity-70"
+            className="mb-3 rounded-2xl border border-border bg-card px-4 py-4"
         >
             <View className="flex-row items-center justify-between">
                 <View className="mr-4 flex-1">
@@ -29,12 +28,12 @@ const GameCard = ({ name, createdAt, onPress }: GameCardProps) => {
                     </Text>
 
                     <Text className="mt-1 text-sm text-muted-foreground">
-                        Created {formattedDate}
+                        {formatDateTime(createdAt)}
                     </Text>
                 </View>
 
                 <View className="h-9 w-9 items-center justify-center rounded-full bg-muted">
-                    <ChevronRight size={20} className="text-muted-foreground" />
+                    <ChevronRight size={20} color={colors.mutedForeground} />
                 </View>
             </View>
         </Pressable>
