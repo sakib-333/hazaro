@@ -2,12 +2,14 @@ import { router } from "expo-router";
 import { ChevronLeft } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "./ThemeProvider";
 
 type SettingsHeaderProps = {
     title: string;
 };
 
 const SettingsHeader = ({ title }: SettingsHeaderProps) => {
+    const { theme } = useTheme();
     return (
         <SafeAreaView
             edges={["top"]}
@@ -21,7 +23,8 @@ const SettingsHeader = ({ title }: SettingsHeaderProps) => {
                 >
                     <ChevronLeft
                         size={20}
-                        className="text-foreground"
+                        // color={theme === "dark" ? "#ffffff" : "#000000"}
+                        className="text-foreground dark:text-foreground"
                     />
                 </Pressable>
 

@@ -1,8 +1,8 @@
+import { useTheme } from "@/components/ThemeProvider";
 import { Check, Moon, Sun, SunMoon } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type ThemeOption = "light" | "dark" | "system";
 
 const themeOptions = [
     {
@@ -26,15 +26,14 @@ const themeOptions = [
 ];
 
 const ThemeScreen = () => {
-    const selectedTheme: ThemeOption = "system";
-
-    const handleThemeChange = (theme: ThemeOption) => {
-        console.log("Selected theme:", theme);
-    };
+    const { theme, setTheme } = useTheme();
 
     return (
-        <SafeAreaView edges={["left", "right"]} className="flex-1 bg-background px-5">
-            <Text className="text-base text-muted-foreground mt-4">
+        <SafeAreaView
+            edges={["left", "right"]}
+            className="flex-1 bg-background px-5"
+        >
+            <Text className="mt-4 text-base text-muted-foreground">
                 Choose how Hazaro should look.
             </Text>
 
@@ -46,21 +45,22 @@ const ThemeScreen = () => {
                 <View className="overflow-hidden rounded-2xl border border-border bg-surface">
                     {themeOptions.map((option, index) => {
                         const Icon = option.icon;
-                        const isSelected = selectedTheme === option.value;
+                        const isSelected = theme === option.value;
 
                         return (
                             <Pressable
                                 key={option.value}
-                                onPress={() => handleThemeChange(option.value)}
-                                className={`flex-row items-center px-4 py-4 active:opacity-70 ${index !== themeOptions.length - 1
-                                    ? "border-b border-border"
-                                    : ""
-                                    }`}
+                                onPress={() => setTheme(option.value)}
+                                className={`flex-row items-center px-4 py-4 active:opacity-70 ${
+                                    index !== themeOptions.length - 1
+                                        ? "border-b border-border"
+                                        : ""
+                                }`}
                             >
                                 <View className="mr-4 h-10 w-10 items-center justify-center rounded-xl bg-primary/5">
                                     <Icon
                                         size={20}
-                                        color="#2563eb"
+                                        color={"#2563eb"}
                                         className={
                                             isSelected
                                                 ? "text-primary"
