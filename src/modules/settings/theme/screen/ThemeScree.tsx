@@ -33,7 +33,7 @@ const ThemeScreen = () => {
     };
 
     return (
-        <SafeAreaView edges={["left", "right"]} className="flex-1 bg-background px-4">
+        <SafeAreaView edges={["left", "right"]} className="flex-1 bg-background px-5">
             <Text className="text-base text-muted-foreground mt-4">
                 Choose how Hazaro should look.
             </Text>
@@ -57,9 +57,10 @@ const ThemeScreen = () => {
                                     : ""
                                     }`}
                             >
-                                <View className="mr-4 h-10 w-10 items-center justify-center rounded-xl bg-background">
+                                <View className="mr-4 h-10 w-10 items-center justify-center rounded-xl bg-primary/5">
                                     <Icon
                                         size={20}
+                                        color="#2563eb"
                                         className={
                                             isSelected
                                                 ? "text-primary"

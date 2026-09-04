@@ -25,7 +25,7 @@ const ViewGamesScreen = () => {
     return (
         <SafeAreaView
             edges={["top", "left", "right"]}
-            className="flex-1 bg-background px-4"
+            className="flex-1 bg-background px-5"
         >
             <View className="mb-4 flex-row items-center justify-between">
                 <Text className="text-2xl font-bold text-primary">
