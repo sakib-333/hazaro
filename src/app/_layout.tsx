@@ -12,6 +12,13 @@ const RootLayout = () => {
             headerShown: false,
           }}
         />
+
+        <Stack.Screen
+          name="settings"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </ThemeProvider>
   )
