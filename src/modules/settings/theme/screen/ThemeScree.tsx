@@ -1,4 +1,5 @@
 import { useTheme } from "@/components/ThemeProvider";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { Check, Moon, Sun, SunMoon } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -27,6 +28,7 @@ const themeOptions = [
 
 const ThemeScreen = () => {
     const { theme, setTheme } = useTheme();
+    const colors = useThemeColors();
 
     return (
         <SafeAreaView
@@ -83,7 +85,7 @@ const ThemeScreen = () => {
                                     <View className="ml-3">
                                         <Check
                                             size={20}
-                                            className="text-primary"
+                                            color={colors.primary}
                                         />
                                     </View>
                                 )}

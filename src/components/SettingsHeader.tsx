@@ -1,15 +1,15 @@
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { router } from "expo-router";
 import { ChevronLeft } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "./ThemeProvider";
 
 type SettingsHeaderProps = {
     title: string;
 };
 
 const SettingsHeader = ({ title }: SettingsHeaderProps) => {
-    const { theme } = useTheme();
+    const colors = useThemeColors();
     return (
         <SafeAreaView
             edges={["top"]}
@@ -23,8 +23,7 @@ const SettingsHeader = ({ title }: SettingsHeaderProps) => {
                 >
                     <ChevronLeft
                         size={20}
-                        // color={theme === "dark" ? "#ffffff" : "#000000"}
-                        className="text-foreground dark:text-foreground"
+                        color={colors.foreground}
                     />
                 </Pressable>
 

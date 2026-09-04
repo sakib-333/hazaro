@@ -2,12 +2,10 @@ import { Tabs } from "expo-router";
 import { CirclePlus, Gamepad2, RotateCcwClock, Settings } from "lucide-react-native";
 
 import TabBarButton from "@/components/TabBarButton";
-import { useTheme } from "@/components/ThemeProvider";
+import { useThemeColors } from "@/hooks/useThemeColors";
 
 const TabsLayout = () => {
-    const { theme } = useTheme();
-
-    const isDark = theme === "dark";
+    const colors = useThemeColors();
 
     return (
         <Tabs
@@ -15,8 +13,8 @@ const TabsLayout = () => {
                 headerShown: false,
 
                 tabBarStyle: {
-                    backgroundColor: isDark ? "#020617" : "#ffffff",
-                    borderTopColor: isDark ? "#020617" : "#ffffff",
+                    backgroundColor: colors.background,
+                    borderTopColor: colors.background,
 
                     elevation: 0,
                     shadowOpacity: 0,
@@ -24,8 +22,8 @@ const TabsLayout = () => {
                     borderTopWidth: 0,
                 },
 
-                tabBarActiveTintColor: "#2563eb",
-                tabBarInactiveTintColor: isDark ? "#94a3b8" : "#64748b",
+                tabBarActiveTintColor: colors.primary,
+                tabBarInactiveTintColor: colors.mutedForeground,
 
                 tabBarShowLabel: true,
             }}
