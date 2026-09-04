@@ -1,8 +1,17 @@
+import SettingsHeader from "@/components/SettingsHeader";
 import { Stack } from "expo-router";
 
 const SettingsLayout = () => {
     return (
-        <Stack>
+        <Stack
+            screenOptions={{
+                header: ({ options }) => (
+                    <SettingsHeader
+                        title={options.title ?? ""}
+                    />
+                ),
+            }}
+        >
             <Stack.Screen
                 name="theme"
                 options={{

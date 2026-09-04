@@ -1,5 +1,6 @@
 import { Check, Moon, Sun, SunMoon } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type ThemeOption = "light" | "dark" | "system";
 
@@ -32,14 +33,12 @@ const ThemeScreen = () => {
     };
 
     return (
-        <View className="flex-1 bg-background px-4">
-            <View className="pt-4">
-                <Text className="text-base text-muted-foreground">
-                    Choose how Hazaro should look.
-                </Text>
-            </View>
+        <SafeAreaView edges={["left", "right"]} className="flex-1 bg-background px-4">
+            <Text className="text-base text-muted-foreground mt-4">
+                Choose how Hazaro should look.
+            </Text>
 
-            <View className="mt-8">
+            <View className="mt-4">
                 <Text className="mb-3 text-sm font-semibold text-muted-foreground">
                     Appearance
                 </Text>
@@ -54,8 +53,8 @@ const ThemeScreen = () => {
                                 key={option.value}
                                 onPress={() => handleThemeChange(option.value)}
                                 className={`flex-row items-center px-4 py-4 active:opacity-70 ${index !== themeOptions.length - 1
-                                        ? "border-b border-border"
-                                        : ""
+                                    ? "border-b border-border"
+                                    : ""
                                     }`}
                             >
                                 <View className="mr-4 h-10 w-10 items-center justify-center rounded-xl bg-background">
@@ -92,7 +91,7 @@ const ThemeScreen = () => {
                     })}
                 </View>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
