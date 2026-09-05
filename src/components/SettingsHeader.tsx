@@ -1,6 +1,6 @@
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { router } from "expo-router";
-import { ChevronLeft } from "lucide-react-native";
+import { ArrowLeft } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -21,7 +21,7 @@ const SettingsHeader = ({ title }: SettingsHeaderProps) => {
                     className="mr-2 h-10 w-10 items-center justify-center rounded-full active:bg-surface"
                     hitSlop={8}
                 >
-                    <ChevronLeft
+                    <ArrowLeft 
                         size={20}
                         color={colors.foreground}
                     />
