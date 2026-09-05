@@ -13,7 +13,7 @@ const SettingsHeader = ({ title }: SettingsHeaderProps) => {
     return (
         <SafeAreaView
             edges={["top"]}
-            className="bg-background px-1"
+            className="bg-background px-2"
         >
             <View className="h-14 flex-row items-center border-b border-border">
                 <Pressable
