@@ -26,11 +26,11 @@ export const useThemeColors = () => {
         useUnstableNativeVariable("--color-border");
 
     return {
-        background: rgb(background),
-        surface: rgb(surface),
-        foreground: rgb(foreground),
-        mutedForeground: rgb(mutedForeground),
-        primary: rgb(primary),
-        border: rgb(border),
+        background: rgb(background) ?? '',
+        surface: rgb(surface) ?? '',
+        foreground: rgb(foreground) ?? '',
+        mutedForeground: rgb(mutedForeground) ?? '',
+        primary: rgb(primary) ?? '',
+        border: rgb(border) ?? '',
     };
 };
