@@ -1,0 +1,176 @@
+import { Controller, useForm } from "react-hook-form";
+import {
+    KeyboardAvoidingView,
+    Platform,
+    Pressable,
+    ScrollView,
+    Text,
+    TextInput,
+    View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import FeedbackTypeSelect, { FeedbackType } from "../components/FeedbackTypeSelect";
+
+
+type FeedbackFormData = {
+    name: string;
+    email: string;
+    feedback: FeedbackType;
+    details: string;
+};
+
+const FeedbackScreen = () => {
+    const {
+        control,
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = useForm<FeedbackFormData>({
+        defaultValues: {
+            name: "",
+            email: "",
+            feedback: undefined,
+            details: "",
+        },
+    });
+
+    const onSubmit = (data: FeedbackFormData) => {
+        console.log("Feedback:", data);
+    };
+
+    return (
+        <SafeAreaView
+            edges={["left", "right"]}
+            className="flex-1 bg-background"
+        >
+            <KeyboardAvoidingView
+                className="flex-1"
+                behavior={Platform.OS === "ios" ? "padding" : undefined}
+            >
+                <ScrollView
+                    className="flex-1"
+                    contentContainerClassName="px-5 pb-8"
+                    keyboardShouldPersistTaps="handled"
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View className="mt-4">
+                        <Text className="text-base leading-6 text-muted-foreground">
+                            Have a suggestion, found a problem, or want to
+                            share your thoughts? Send us your feedback.
+                        </Text>
+                    </View>
+
+                    {/* Name */}
+
+                    <View className="mt-6">
+                        <Text className="mb-2 text-sm font-medium text-foreground">
+                            Name
+                        </Text>
+
+                        <TextInput
+                            {...register("name", {
+                                required: "Name is required",
+                            })}
+                            placeholder="Enter your name"
+                            placeholderTextColor="#64748b"
+                            className="rounded-xl border border-border bg-card px-4 py-3.5 text-sm text-foreground"
+                        />
+
+                        {errors.name && (
+                            <Text className="mt-1.5 text-xs text-red-500">
+                                {errors.name.message}
+                            </Text>
+                        )}
+                    </View>
+
+                    {/* Email */}
+
+                    <View className="mt-5">
+                        <Text className="mb-2 text-sm font-medium text-foreground">
+                            Email
+                        </Text>
+
+                        <TextInput
+                            {...register("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                    message: "Enter a valid email address",
+                                },
+                            })}
+                            placeholder="Enter your email"
+                            placeholderTextColor="#64748b"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            className="rounded-xl border border-border bg-card px-4 py-3.5 text-sm text-foreground"
+                        />
+
+                        {errors.email && (
+                            <Text className="mt-1.5 text-xs text-red-500">
+                                {errors.email.message}
+                            </Text>
+                        )}
+                    </View>
+
+                    {/* Feedback Type */}
+
+                    <View className="mt-5">
+                        <Controller
+                            control={control}
+                            name="feedback"
+                            rules={{
+                                required: "Feedback type is required",
+                            }}
+                            render={({ field: { value, onChange } }) => (
+                                <FeedbackTypeSelect
+                                    value={value}
+                                    onChange={onChange}
+                                    error={errors.feedback?.message}
+                                />
+                            )}
+                        />
+                    </View>
+
+                    {/* Details */}
+
+                    <View className="mt-5">
+                        <Text className="mb-2 text-sm font-medium text-foreground">
+                            Details
+                        </Text>
+
+                        <TextInput
+                            {...register("details", {
+                                required: "Details are required",
+                            })}
+                            placeholder="Tell us more about your feedback..."
+                            placeholderTextColor="#64748b"
+                            multiline
+                            textAlignVertical="top"
+                            className="min-h-[140px] rounded-xl border border-border bg-card px-4 py-3.5 text-sm text-foreground"
+                        />
+
+                        {errors.details && (
+                            <Text className="mt-1.5 text-xs text-red-500">
+                                {errors.details.message}
+                            </Text>
+                        )}
+                    </View>
+
+                    {/* Send Button */}
+
+                    <Pressable
+                        onPress={handleSubmit(onSubmit)}
+                        className="mt-6 items-center rounded-xl bg-primary px-4 py-4 active:opacity-80"
+                    >
+                        <Text className="text-sm font-semibold text-primary-foreground">
+                            Send Feedback
+                        </Text>
+                    </Pressable>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
+    );
+};
+
+export default FeedbackScreen;
