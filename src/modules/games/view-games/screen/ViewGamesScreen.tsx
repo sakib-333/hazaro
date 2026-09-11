@@ -1,6 +1,7 @@
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { EllipsisVertical } from "lucide-react-native";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FlatList, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import EmptyGames from "../components/EmptyGames";
@@ -8,6 +9,7 @@ import GameCard from "../components/GameCard";
 import { demoData } from "../demo-data/demo.data";
 
 const ViewGamesScreen = () => {
+    const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState("");
     const colors = useThemeColors();
 
@@ -42,7 +44,7 @@ const ViewGamesScreen = () => {
                 data={filteredData}
                 ListHeaderComponent={
                     <TextInput
-                        placeholder="Search games..."
+                        placeholder={t("games.search_games")}
                         placeholderTextColor={colors.mutedForeground}
                         className="mb-4 h-12 rounded-xl border border-border bg-card px-4 text-base text-foreground"
                         value={searchQuery}

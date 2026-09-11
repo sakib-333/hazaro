@@ -3,9 +3,11 @@ import { CirclePlus, Gamepad2, RotateCcwClock, Settings } from "lucide-react-nat
 
 import TabBarButton from "@/components/TabBarButton";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { useTranslation } from "react-i18next";
 
 const TabsLayout = () => {
     const colors = useThemeColors();
+    const { t } = useTranslation();
 
     return (
         <Tabs
@@ -31,7 +33,7 @@ const TabsLayout = () => {
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: "Games",
+                    title: t("bottomTabs.games"),
 
                     tabBarButton: (props) => (
                         <TabBarButton {...props} />
@@ -50,7 +52,7 @@ const TabsLayout = () => {
             <Tabs.Screen
                 name="create-game"
                 options={{
-                    title: "Create",
+                    title: t("bottomTabs.create"),
 
                     tabBarButton: (props) => (
                         <TabBarButton {...props} />
@@ -69,7 +71,7 @@ const TabsLayout = () => {
             <Tabs.Screen
                 name="history"
                 options={{
-                    title: "History",
+                    title: t("bottomTabs.history"),
 
                     tabBarButton: (props) => (
                         <TabBarButton {...props} />
@@ -88,7 +90,7 @@ const TabsLayout = () => {
             <Tabs.Screen
                 name="settings"
                 options={{
-                    title: "Settings",
+                    title: t("bottomTabs.settings"),
 
                     tabBarButton: (props) => (
                         <TabBarButton {...props} />

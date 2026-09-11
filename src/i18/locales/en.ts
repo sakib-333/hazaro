@@ -1,4 +1,16 @@
 export default {
+    /*──Bottom tabs───────────────────────*/
+    bottomTabs: {
+        games: "Games",
+        create: "create",
+        history: "History",
+        settings: "Settings",
+    },
+
+    /*──Screens───────────────────────*/
+    games: {
+        search_games: "Search Games",
+    },
     common: {
         language: "Language",
     },

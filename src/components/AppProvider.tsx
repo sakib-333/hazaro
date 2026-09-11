@@ -35,7 +35,6 @@ export const AppProvider = ({
   } = useColorScheme();
 
   const [theme, setThemeState] = useState<ThemeMode>("system");
-
   useEffect(() => {
     const getInitialTheme = async () => {
       const storedTheme = await getTheme();

@@ -1,4 +1,17 @@
 export default {
+    /*──Bottom tabs───────────────────────*/
+    bottomTabs: {
+        games: "খেলা",
+        create: "তৈরি করুন",
+        history: "ইতিহাস",
+        settings: "সেটিংস",
+    },
+
+    /*──Screens───────────────────────*/
+    games: {
+        search_games: "খেলা অনুসন্ধান",
+    },
+
     common: {
         language: "ভাষা",
     },

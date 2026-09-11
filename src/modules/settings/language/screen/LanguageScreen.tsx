@@ -40,8 +40,8 @@ const LanguageScreen = () => {
     const handleLanguageChange = async (
         language: "en" | "bn"
     ) => {
-        await i18n.changeLanguage(language);
         await updateLanguage(language);
+        await i18n.changeLanguage(language);
     };
 
     return (
