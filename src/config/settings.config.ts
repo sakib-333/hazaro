@@ -7,7 +7,7 @@ import {
     Shield,
     Trophy,
 } from "lucide-react-native";
-import { SettingsSection } from "../types/settings.config.type";
+import { SettingsSection } from "../modules/settings/types/settings.config.type";
 
 export const settingsConfig: SettingsSection[] = [
     {

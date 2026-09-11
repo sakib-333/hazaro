@@ -1,12 +1,12 @@
+import { settingsConfig } from '@/config/settings.config'
 import { router } from 'expo-router'
 import { SectionList, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import SettingsItem from '../components/SettingsItem'
-import { settingsConfig } from '../config/settings.config'
+import SettingsItem from './SettingsItem'
 
-const SettingsScreen = () => {
-    return (
-        <SafeAreaView
+const SettingsTab = () => {
+  return (
+    <SafeAreaView
             edges={["top", "left", "right"]}
             className="flex-1 bg-background px-5"
         >
@@ -34,7 +34,7 @@ const SettingsScreen = () => {
                 )}
             />
         </SafeAreaView>
-    )
+  )
 }
 
-export default SettingsScreen
+export default SettingsTab

@@ -1,8 +1,8 @@
-import SettingsScreen from "@/modules/settings/screen/SettingsScreen";
+import SettingsTab from "@/components/tabs/settings/SettingsTab";
 
 const SettingsRoute = () => {
     return (
-        <SettingsScreen />
+        <SettingsTab />
     );
 };
 
