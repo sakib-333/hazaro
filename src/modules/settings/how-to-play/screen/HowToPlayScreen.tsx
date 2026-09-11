@@ -1,5 +1,6 @@
 import { Calculator, Crown, Info, Users } from "lucide-react-native";
 import { ScrollView, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CardScoringCard from "../components/CardScoringCard";
 import GameOverviewCard from "../components/GameOverviewCard";
@@ -8,6 +9,8 @@ import WinningGameCard from "../components/WinningGameCard";
 
 
 const HowToPlayScreen = () => {
+    const { t } = useTranslation();
+
     return (
         <SafeAreaView
             edges={["left", "right", "bottom"]}
@@ -21,8 +24,7 @@ const HowToPlayScreen = () => {
                 {/* Intro */}
                 <View className="mt-4">
                     <Text className="text-base leading-6 text-muted-foreground">
-                        Learn how scoring works and how to win a game of
-                        Hazaro.
+                        {t("settings.howToPlay.description")}
                     </Text>
                 </View>
 
@@ -30,7 +32,7 @@ const HowToPlayScreen = () => {
                 <View className="mt-6">
                     <SectionHeader
                         icon={Users}
-                        title="Game Overview"
+                        title={t("settings.howToPlay.sections.gameOverview")}
                     />
 
                     <GameOverviewCard />
@@ -40,7 +42,7 @@ const HowToPlayScreen = () => {
                 <View className="mt-6">
                     <SectionHeader
                         icon={Calculator}
-                        title="Card Scoring"
+                        title={t("settings.howToPlay.sections.cardScoring")}
                     />
 
                     <CardScoringCard />
@@ -50,7 +52,7 @@ const HowToPlayScreen = () => {
                 <View className="mt-6">
                     <SectionHeader
                         icon={Info}
-                        title="Round Scoring"
+                        title={t("settings.howToPlay.sections.roundScoring")}
                     />
 
                     <View className="mt-3 rounded-2xl border border-border bg-card p-4">
@@ -64,14 +66,11 @@ const HowToPlayScreen = () => {
 
                             <View className="flex-1">
                                 <Text className="text-base font-semibold text-foreground">
-                                    Record scores after each round
+                                    {t("settings.howToPlay.round.title")}
                                 </Text>
 
                                 <Text className="mt-1 text-sm leading-5 text-muted-foreground text-justify">
-                                    After every round, enter the score earned
-                                    by each player. The scores are added to
-                                    each player&apos;s running total throughout
-                                    the game.
+                                    {t("settings.howToPlay.round.description")}
                                 </Text>
                             </View>
                         </View>
@@ -82,7 +81,7 @@ const HowToPlayScreen = () => {
                 <View className="mt-6">
                     <SectionHeader
                         icon={Crown}
-                        title="Winning the Game"
+                        title={t("settings.howToPlay.sections.winning")}
                     />
 
                     <WinningGameCard />

@@ -9,6 +9,7 @@ import {
     View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import FeedbackTypeSelect, { FeedbackType } from "../components/FeedbackTypeSelect";
 
 
@@ -20,6 +21,8 @@ type FeedbackFormData = {
 };
 
 const FeedbackScreen = () => {
+    const { t } = useTranslation();
+
     const {
         control,
         register,
@@ -56,8 +59,7 @@ const FeedbackScreen = () => {
                 >
                     <View className="mt-4">
                         <Text className="text-base leading-6 text-muted-foreground">
-                            Have a suggestion, found a problem, or want to
-                            share your thoughts? Send us your feedback.
+                            {t("settings.feedback.description")}
                         </Text>
                     </View>
 
@@ -65,14 +67,14 @@ const FeedbackScreen = () => {
 
                     <View className="mt-6">
                         <Text className="mb-2 text-sm font-medium text-foreground">
-                            Name
+                            {t("settings.feedback.name.label")}
                         </Text>
 
                         <TextInput
                             {...register("name", {
-                                required: "Name is required",
+                                required: t("settings.feedback.name.required"),
                             })}
-                            placeholder="Enter your name"
+                            placeholder={t("settings.feedback.name.placeholder")}
                             placeholderTextColor="#64748b"
                             className="rounded-xl border border-border bg-card px-4 py-3.5 text-sm text-foreground"
                         />
@@ -88,18 +90,18 @@ const FeedbackScreen = () => {
 
                     <View className="mt-5">
                         <Text className="mb-2 text-sm font-medium text-foreground">
-                            Email
+                            {t("settings.feedback.email.label")}
                         </Text>
 
                         <TextInput
                             {...register("email", {
-                                required: "Email is required",
+                                required: t("settings.feedback.email.required"),
                                 pattern: {
                                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                    message: "Enter a valid email address",
+                                    message: t("settings.feedback.email.invalid"),
                                 },
                             })}
-                            placeholder="Enter your email"
+                            placeholder={t("settings.feedback.email.placeholder")}
                             placeholderTextColor="#64748b"
                             keyboardType="email-address"
                             autoCapitalize="none"
@@ -120,7 +122,7 @@ const FeedbackScreen = () => {
                             control={control}
                             name="feedback"
                             rules={{
-                                required: "Feedback type is required",
+                                required: t("settings.feedback.typeRequired"),
                             }}
                             render={({ field: { value, onChange } }) => (
                                 <FeedbackTypeSelect
@@ -136,14 +138,14 @@ const FeedbackScreen = () => {
 
                     <View className="mt-5">
                         <Text className="mb-2 text-sm font-medium text-foreground">
-                            Details
+                            {t("settings.feedback.details.label")}
                         </Text>
 
                         <TextInput
                             {...register("details", {
-                                required: "Details are required",
+                                required: t("settings.feedback.details.required"),
                             })}
-                            placeholder="Tell us more about your feedback..."
+                            placeholder={t("settings.feedback.details.placeholder")}
                             placeholderTextColor="#64748b"
                             multiline
                             textAlignVertical="top"
@@ -164,7 +166,7 @@ const FeedbackScreen = () => {
                         className="mt-6 items-center rounded-xl bg-primary px-4 py-4 active:opacity-80"
                     >
                         <Text className="text-sm font-semibold text-primary-foreground">
-                            Send Feedback
+                            {t("settings.feedback.submit")}
                         </Text>
                     </Pressable>
                 </ScrollView>

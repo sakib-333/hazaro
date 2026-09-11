@@ -1,11 +1,14 @@
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 import PrivacyPolicyContact from "../components/PrivacyPolicyContact";
 import PrivacyPolicyHeader from "../components/PrivacyPolicyHeader";
 import PrivacyPolicySection from "../components/PrivacyPolicySection";
 
 const PrivacyPolicyScreen = () => {
+    const { t } = useTranslation();
+
     return (
         <SafeAreaView
             edges={["left", "right", "bottom"]}
@@ -24,235 +27,171 @@ const PrivacyPolicyScreen = () => {
 
                 {/* Introduction */}
 
-                <PrivacyPolicySection title="Introduction">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.introduction.title")}>
                     <Text className="text-sm leading-6 text-muted-foreground">
-                        Hazaro is a score tracking app designed to help
-                        players keep track of games, rounds, and scores.
-                        We respect your privacy and aim to keep the
-                        information handled by the app limited to what is
-                        needed to provide its features.
+                        {t("settings.privacyPolicy.introduction.description1")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        This Privacy Policy explains what information
-                        Hazaro handles, how that information is used, where
-                        it is stored, and the choices available to you.
+                        {t("settings.privacyPolicy.introduction.description2")}
                     </Text>
                 </PrivacyPolicySection>
 
                 {/* Information We Collect */}
 
-                <PrivacyPolicySection title="Information We Collect">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.collection.title")}>
                     <Text className="text-sm leading-6 text-muted-foreground">
-                        Hazaro may handle information that you enter while
-                        using the app.
+                        {t("settings.privacyPolicy.collection.description")}
                     </Text>
 
                     <Text className="mt-4 text-sm font-semibold text-foreground">
-                        Game Information
+                        {t("settings.privacyPolicy.collection.game.title")}
                     </Text>
 
                     <Text className="mt-2 text-sm leading-6 text-muted-foreground">
-                        When you create and manage a game, the app may store
-                        the game name, player names, player scores, round
-                        information, game creation and update times, and
-                        the winning score configured for the game.
+                        {t("settings.privacyPolicy.collection.game.description")}
                     </Text>
 
                     <Text className="mt-4 text-sm font-semibold text-foreground">
-                        Feedback Information
+                        {t("settings.privacyPolicy.collection.feedback.title")}
                     </Text>
 
                     <Text className="mt-2 text-sm leading-6 text-muted-foreground">
-                        When you use the Feedback feature, you may provide
-                        your name, email address, feedback type, and feedback
-                        details.
+                        {t("settings.privacyPolicy.collection.feedback.description")}
                     </Text>
 
                     <Text className="mt-4 text-sm font-semibold text-foreground">
-                        App Preferences
+                        {t("settings.privacyPolicy.collection.preferences.title")}
                     </Text>
 
                     <Text className="mt-2 text-sm leading-6 text-muted-foreground">
-                        Hazaro may store app preferences such as your
-                        selected theme and language so that the app can
-                        provide the experience you selected.
+                        {t("settings.privacyPolicy.collection.preferences.description")}
                     </Text>
                 </PrivacyPolicySection>
 
                 {/* How We Use Information */}
 
-                <PrivacyPolicySection title="How We Use Your Information">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.usage.title")}>
                     <Text className="text-sm leading-6 text-muted-foreground">
-                        Information handled by Hazaro is used to provide the
-                        features of the app.
+                        {t("settings.privacyPolicy.usage.description1")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        Game information is used to create games, maintain
-                        player information, record round scores, calculate
-                        running totals, determine when a player reaches the
-                        configured winning score, and display game history.
+                        {t("settings.privacyPolicy.usage.description2")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        Feedback information is used to understand your
-                        comments, identify problems, consider feature
-                        requests, and improve Hazaro.
+                        {t("settings.privacyPolicy.usage.description3")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        App preferences are used to remember choices such as
-                        your preferred language and theme.
+                        {t("settings.privacyPolicy.usage.description4")}
                     </Text>
                 </PrivacyPolicySection>
 
                 {/* Local Storage */}
 
-                <PrivacyPolicySection title="Data Storage">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.storage.title")}>
                     <Text className="text-sm leading-6 text-muted-foreground">
-                        Game-related information and app preferences are
-                        stored locally on your device using the app's local
-                        storage. This allows Hazaro to retain your games,
-                        scores, history, and selected preferences when you
-                        continue using the app.
+                        {t("settings.privacyPolicy.storage.description1")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        Locally stored game information remains on your
-                        device unless you delete it through the features
-                        provided by the app or remove the app from your
-                        device.
+                        {t("settings.privacyPolicy.storage.description2")}
                     </Text>
                 </PrivacyPolicySection>
 
                 {/* Feedback */}
 
-                <PrivacyPolicySection title="Feedback">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.feedback.title")}>
                     <Text className="text-sm leading-6 text-muted-foreground">
-                        If you submit feedback through Hazaro, the
-                        information you provide may be transmitted to the
-                        service used to receive and process that feedback.
+                        {t("settings.privacyPolicy.feedback.description1")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        Please avoid including passwords, payment
-                        information, or other sensitive information in your
-                        feedback.
+                        {t("settings.privacyPolicy.feedback.description2")}
                     </Text>
                 </PrivacyPolicySection>
 
                 {/* Data Sharing */}
 
-                <PrivacyPolicySection title="Data Sharing">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.sharing.title")}>
                     <Text className="text-sm leading-6 text-muted-foreground">
-                        Hazaro does not sell your personal information.
+                        {t("settings.privacyPolicy.sharing.description1")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        Game information stored locally on your device is
-                        not shared by Hazaro simply because you use the app.
-                        Information that you voluntarily submit through
-                        features such as feedback may be processed by the
-                        service used to receive that submission.
+                        {t("settings.privacyPolicy.sharing.description2")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        We may also disclose information when required to
-                        comply with applicable law or to protect the
-                        security, rights, or integrity of the app and its
-                        users.
+                        {t("settings.privacyPolicy.sharing.description3")}
                     </Text>
                 </PrivacyPolicySection>
 
                 {/* Third Party Services */}
 
-                <PrivacyPolicySection title="Third-Party Services">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.thirdParty.title")}>
                     <Text className="text-sm leading-6 text-muted-foreground">
-                        Hazaro may use third-party services when they are
-                        required to provide specific app functionality.
-                        Information sent to such services is handled
-                        according to the relevant service's privacy policy
-                        and terms.
+                        {t("settings.privacyPolicy.thirdParty.description1")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        We do not consider libraries used only to build the
-                        application to be data-collecting services unless
-                        they actually receive or process user information.
+                        {t("settings.privacyPolicy.thirdParty.description2")}
                     </Text>
                 </PrivacyPolicySection>
 
                 {/* Data Security */}
 
-                <PrivacyPolicySection title="Data Security">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.security.title")}>
                     <Text className="text-sm leading-6 text-muted-foreground">
-                        We take reasonable measures to protect information
-                        handled by Hazaro. However, no electronic storage
-                        system or method of transmitting information can be
-                        guaranteed to be completely secure.
+                        {t("settings.privacyPolicy.security.description")}
                     </Text>
                 </PrivacyPolicySection>
 
                 {/* Children's Privacy */}
 
-                <PrivacyPolicySection title="Children's Privacy">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.children.title")}>
                     <Text className="text-sm leading-6 text-muted-foreground">
-                        Hazaro is intended for general use and does not
-                        intentionally collect personal information from
-                        children for purposes that require parental consent.
+                        {t("settings.privacyPolicy.children.description1")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        If you believe that a child has provided personal
-                        information through a feature of Hazaro, please
-                        contact us so that we can review the situation and
-                        take appropriate action.
+                        {t("settings.privacyPolicy.children.description2")}
                     </Text>
                 </PrivacyPolicySection>
 
                 {/* Your Choices */}
 
-                <PrivacyPolicySection title="Your Choices">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.choices.title")}>
                     <Text className="text-sm leading-6 text-muted-foreground">
-                        You can manage the game information stored by Hazaro
-                        using the game's available management and deletion
-                        features.
+                        {t("settings.privacyPolicy.choices.description1")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        You can also choose whether to provide information
-                        when using features such as feedback. Information
-                        required by a particular feature may be necessary to
-                        use that feature.
+                        {t("settings.privacyPolicy.choices.description2")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        If you have questions about information submitted
-                        through the app, you can contact us using the
-                        contact information provided below.
+                        {t("settings.privacyPolicy.choices.description3")}
                     </Text>
                 </PrivacyPolicySection>
 
                 {/* Changes */}
 
-                <PrivacyPolicySection title="Changes to This Privacy Policy">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.changes.title")}>
                     <Text className="text-sm leading-6 text-muted-foreground">
-                        We may update this Privacy Policy when Hazaro's
-                        features, data handling practices, or applicable
-                        requirements change.
+                        {t("settings.privacyPolicy.changes.description1")}
                     </Text>
 
                     <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                        When the policy is updated, the revised version will
-                        be made available within the app and the "Last
-                        updated" date will be changed accordingly.
+                        {t("settings.privacyPolicy.changes.description2")}
                     </Text>
                 </PrivacyPolicySection>
 
                 {/* Contact */}
 
-                <PrivacyPolicySection title="Contact Us">
+                <PrivacyPolicySection title={t("settings.privacyPolicy.contact")}>
                     <PrivacyPolicyContact />
                 </PrivacyPolicySection>
 

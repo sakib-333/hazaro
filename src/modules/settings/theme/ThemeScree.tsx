@@ -3,6 +3,7 @@ import { useThemeColors } from "@/hooks/useThemeColors";
 import { ThemeMode } from "@/types/settings.types";
 import { Check, Moon, Sun, SunMoon } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { updateTheme } from "./utils/updateTheme";
 
@@ -10,20 +11,20 @@ import { updateTheme } from "./utils/updateTheme";
 const themeOptions = [
     {
         value: "system" as const,
-        title: "System",
-        description: "Follow your device setting",
+        titleKey: "settings.theme.options.system.title",
+        descriptionKey: "settings.theme.options.system.description",
         icon: SunMoon,
     },
     {
         value: "light" as const,
-        title: "Light",
-        description: "Always use light mode",
+        titleKey: "settings.theme.options.light.title",
+        descriptionKey: "settings.theme.options.light.description",
         icon: Sun,
     },
     {
         value: "dark" as const,
-        title: "Dark",
-        description: "Always use dark mode",
+        titleKey: "settings.theme.options.dark.title",
+        descriptionKey: "settings.theme.options.dark.description",
         icon: Moon,
     },
 ];
@@ -32,6 +33,7 @@ const themeOptions = [
 const ThemeScreen = () => {
     const { theme, setTheme } = useTheme();
     const colors = useThemeColors();
+    const { t } = useTranslation();
     
     const handleUpdateTheme = async (theme: ThemeMode) => { 
         await updateTheme(theme);
@@ -45,12 +47,12 @@ const ThemeScreen = () => {
             className="flex-1 bg-background px-5"
         >
             <Text className="mt-4 text-base text-muted-foreground">
-                Choose how Hazaro should look.
+                {t("settings.theme.description")}
             </Text>
 
             <View className="mt-4">
                 <Text className="mb-3 text-sm font-semibold text-muted-foreground">
-                    Appearance
+                    {t("settings.theme.appearance")}
                 </Text>
 
                 <View className="overflow-hidden rounded-2xl border border-border bg-card">
@@ -82,11 +84,11 @@ const ThemeScreen = () => {
 
                                 <View className="flex-1">
                                     <Text className="text-base font-semibold text-foreground">
-                                        {option.title}
+                                        {t(option.titleKey)}
                                     </Text>
 
                                     <Text className="mt-1 text-sm text-muted-foreground">
-                                        {option.description}
+                                        {t(option.descriptionKey)}
                                     </Text>
                                 </View>
 

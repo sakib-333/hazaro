@@ -1,5 +1,6 @@
 import { Info, Sparkles } from "lucide-react-native";
 import { ScrollView, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AboutHeader from "../components/AboutHeader";
 import AppInfoCard from "../components/AppInfoCard";
@@ -7,6 +8,8 @@ import FeatureList from "../components/FeatureList";
 import SectionHeader from "../components/SectionHeader";
 
 const AboutScreen = () => {
+    const { t } = useTranslation();
+
     return (
         <SafeAreaView
             edges={["left", "right", "bottom"]}
@@ -28,20 +31,16 @@ const AboutScreen = () => {
                 <View className="mt-8">
                     <SectionHeader
                         icon={Info}
-                        title="About Hazaro"
+                        title={t("settings.about.sections.about")}
                     />
 
                     <View className="mt-3 rounded-2xl border border-border bg-card p-4">
                         <Text className="text-sm leading-6 text-muted-foreground">
-                            Hazaro is a simple score tracking app designed
-                            to make keeping track of scores during a game
-                            quick and effortless.
+                            {t("settings.about.description")}
                         </Text>
 
                         <Text className="mt-3 text-sm leading-6 text-muted-foreground">
-                            Create a game, add players, record scores after
-                            each round, and let Hazaro keep track of the
-                            totals for you.
+                            {t("settings.about.instructions")}
                         </Text>
                     </View>
                 </View>
@@ -51,7 +50,7 @@ const AboutScreen = () => {
                 <View className="mt-8">
                     <SectionHeader
                         icon={Sparkles}
-                        title="Features"
+                        title={t("settings.about.sections.features")}
                     />
 
                     <FeatureList />
@@ -62,7 +61,7 @@ const AboutScreen = () => {
                 <View className="mt-8">
                     <SectionHeader
                         icon={Info}
-                        title="App Information"
+                        title={t("settings.about.sections.appInformation")}
                     />
 
                     <AppInfoCard />
@@ -72,7 +71,7 @@ const AboutScreen = () => {
 
                 <View className="mt-8 items-center">
                     <Text className="text-xs text-muted-foreground">
-                        Made with care for Hazaro players.
+                        {t("settings.about.footer")}
                     </Text>
 
                     <Text className="mt-1 text-xs text-muted-foreground">
