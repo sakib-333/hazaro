@@ -11,69 +11,69 @@ import { SettingsSection } from "../components/tabs/settings/settings.config.typ
 
 export const settingsConfig: SettingsSection[] = [
     {
-        title: "Appearance",
+        title: "settings.sections.appearance",
         data: [
             {
                 id: "theme",
-                title: "Theme",
-                description: "Choose light, dark, or system theme",
+                title: "settings.items.theme.title",
+                description: "settings.items.theme.description",
                 route: "/settings/theme",
                 icon: Moon,
             },
         ],
     },
     {
-        title: "Preferences",
+        title: "settings.sections.preferences",
         data: [
             {
                 id: "language",
-                title: "Language",
-                description: "Choose your preferred language",
+                title: "settings.items.language.title",
+                description: "settings.items.language.description",
                 route: "/settings/language",
                 icon: Languages,
             },
         ],
     },
     {
-        title: "Game",
+        title: "settings.sections.game",
         data: [
             {
                 id: "default-winning-score",
-                title: "Default Winning Score",
-                description: "Set the default score required to win",
+                title: "settings.items.defaultWinningScore.title",
+                description: "settings.items.defaultWinningScore.description",
                 route: "/settings/default-winning-score",
                 icon: Trophy,
             },
             {
                 id: "how-to-play",
-                title: "How to Play",
-                description: "Learn how to play Hazari",
+                title: "settings.items.howToPlay.title",
+                description: "settings.items.howToPlay.description",
                 route: "/settings/how-to-play",
                 icon: PlayCircle,
             },
         ],
     },
     {
-        title: "About",
+        title: "settings.sections.about",
         data: [
             {
                 id: "about",
-                title: "About Hazaro",
-                description: "Learn more about Hazaro",
+                title: "settings.items.about.title",
+                description: "settings.items.about.description",
                 route: "/settings/about",
                 icon: Info,
             },
             {
                 id: "feedback",
-                title: "Feedback",
-                description: "Share your feedback with us",
+                title: "settings.items.feedback.title",
+                description: "settings.items.feedback.description",
                 route: "/settings/feedback",
                 icon: MessageSquare,
             },
             {
                 id: "privacy-policy",
-                title: "Privacy Policy",
-                description: "Read our privacy policy",
+                title: "settings.items.privacyPolicy.title",
+                description: "settings.items.privacyPolicy.description",
                 route: "/settings/privacy-policy",
                 icon: Shield,
             },
