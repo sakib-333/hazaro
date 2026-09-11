@@ -9,6 +9,8 @@ import {
 import { useColorScheme } from "nativewind";
 import { View } from "react-native";
 
+import i18n from "@/i18";
+import { getLanguage } from "@/modules/settings/language/utils/getLanguage";
 import { getTheme } from "@/modules/settings/theme/utils/getTheme";
 import { themes } from "@/theme/colors";
 import { ThemeMode } from "@/types/settings.types";
@@ -20,13 +22,13 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-type ThemeProviderProps = {
+type AppProviderProps = {
   children: ReactNode;
 };
 
-export const ThemeProvider = ({
+export const AppProvider = ({
   children,
-}: ThemeProviderProps) => {
+}: AppProviderProps) => {
   const {
     colorScheme,
     setColorScheme,
@@ -37,6 +39,8 @@ export const ThemeProvider = ({
   useEffect(() => {
     const getInitialTheme = async () => {
       const storedTheme = await getTheme();
+      const storedLanguage = await getLanguage();
+      await i18n.changeLanguage(storedLanguage);
       setThemeState(storedTheme);
       setColorScheme(storedTheme);
     }
@@ -74,7 +78,7 @@ export const useTheme = () => {
 
   if (!context) {
     throw new Error(
-      "useTheme must be used inside ThemeProvider"
+      "useTheme must be used inside AppProvider"
     );
   }
 

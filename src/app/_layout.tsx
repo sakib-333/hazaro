@@ -1,10 +1,10 @@
-import { ThemeProvider } from '@/components/ThemeProvider';
+import { AppProvider } from '@/components/AppProvider';
 import { Stack } from 'expo-router';
 import "../global.css";
 
 const RootLayout = () => {
   return (
-    <ThemeProvider>
+    <AppProvider>
       <Stack>
         <Stack.Screen
           name="(tabs)"
@@ -20,7 +20,7 @@ const RootLayout = () => {
           }}
         />
       </Stack>
-    </ThemeProvider>
+    </AppProvider>
   )
 }
 

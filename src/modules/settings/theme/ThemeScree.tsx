@@ -1,4 +1,4 @@
-import { useTheme } from "@/components/ThemeProvider";
+import { useTheme } from "@/components/AppProvider";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { ThemeMode } from "@/types/settings.types";
 import { Check, Moon, Sun, SunMoon } from "lucide-react-native";

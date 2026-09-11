@@ -1,6 +1,6 @@
 import { Moon, Sun } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
-import { useTheme } from "./ThemeProvider";
+import { useTheme } from "./AppProvider";
 
 
 const ThemeToggle = () => {
