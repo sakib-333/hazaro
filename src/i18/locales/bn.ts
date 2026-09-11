@@ -24,6 +24,16 @@ export default {
             about: "সম্পর্কে",
         },
 
+        screenTitles: {
+            theme: "থিম",
+            language: "ভাষা",
+            defaultWinningScore: "ডিফল্ট জয়ের স্কোর",
+            howToPlay: "কীভাবে খেলবেন",
+            about: "সম্পর্কে",
+            feedback: "মতামত",
+            privacyPolicy: "গোপনীয়তা নীতি",
+        },
+
         items: {
             theme: {
                 title: "থিম",

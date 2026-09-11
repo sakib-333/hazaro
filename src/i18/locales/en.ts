@@ -23,6 +23,16 @@ export default {
             about: "About",
         },
 
+        screenTitles: {
+            theme: "Theme",
+            language: "Language",
+            defaultWinningScore: "Default Winning Score",
+            howToPlay: "How to Play",
+            about: "About",
+            feedback: "Feedback",
+            privacyPolicy: "Privacy Policy",
+        },
+
         items: {
             theme: {
                 title: "Theme",
