@@ -1,4 +1,5 @@
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { router } from "expo-router";
 import { EllipsisVertical } from "lucide-react-native";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -55,6 +56,7 @@ const ViewGamesScreen = () => {
                     <GameCard
                         name={item.name}
                         createdAt={item.createdAt}
+                        onPress={() => router.push(`/games/${item.id}`)}
                     />
                 )}
                 ListEmptyComponent={

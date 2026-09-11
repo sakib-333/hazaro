@@ -19,6 +19,13 @@ const RootLayout = () => {
             headerShown: false,
           }}
         />
+
+        <Stack.Screen
+          name="games/[gameId]"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </AppProvider>
   )
