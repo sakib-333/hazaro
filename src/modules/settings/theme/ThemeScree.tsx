@@ -1,8 +1,10 @@
 import { useTheme } from "@/components/ThemeProvider";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { ThemeMode } from "@/types/settings.types";
 import { Check, Moon, Sun, SunMoon } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { updateTheme } from "./utils/updateTheme";
 
 
 const themeOptions = [
@@ -26,9 +28,16 @@ const themeOptions = [
     },
 ];
 
+
 const ThemeScreen = () => {
     const { theme, setTheme } = useTheme();
     const colors = useThemeColors();
+    
+    const handleUpdateTheme = async (theme: ThemeMode) => { 
+        await updateTheme(theme);
+        setTheme(theme);
+    
+    }
 
     return (
         <SafeAreaView
@@ -52,7 +61,7 @@ const ThemeScreen = () => {
                         return (
                             <Pressable
                                 key={option.value}
-                                onPress={() => setTheme(option.value)}
+                                onPress={() => handleUpdateTheme(option.value)}
                                 className={`flex-row items-center px-4 py-4 active:opacity-70 ${
                                     index !== themeOptions.length - 1
                                         ? "border-b border-border"

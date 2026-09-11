@@ -2,19 +2,20 @@ import {
   createContext,
   ReactNode,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
 import { useColorScheme } from "nativewind";
 import { View } from "react-native";
 
+import { getTheme } from "@/modules/settings/theme/utils/getTheme";
 import { themes } from "@/theme/colors";
-
-export type Theme = "light" | "dark" | "system";
+import { ThemeMode } from "@/types/settings.types";
 
 type ThemeContextType = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+  theme: ThemeMode;
+  setTheme: (theme: ThemeMode) => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -31,9 +32,19 @@ export const ThemeProvider = ({
     setColorScheme,
   } = useColorScheme();
 
-  const [theme, setThemeState] = useState<Theme>("system");
+  const [theme, setThemeState] = useState<ThemeMode>("system");
 
-  const setTheme = (newTheme: Theme) => {
+  useEffect(() => {
+    const getInitialTheme = async () => {
+      const storedTheme = await getTheme();
+      setThemeState(storedTheme);
+      setColorScheme(storedTheme);
+    }
+
+    getInitialTheme();
+  }, [])
+
+  const setTheme = (newTheme: ThemeMode) => {
     setThemeState(newTheme);
     setColorScheme(newTheme);
   };
