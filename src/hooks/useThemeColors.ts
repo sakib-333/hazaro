@@ -25,6 +25,9 @@ export const useThemeColors = () => {
     const border =
         useUnstableNativeVariable("--color-border");
 
+    const danger =
+        useUnstableNativeVariable("--color-danger");
+
     return {
         background: rgb(background) ?? '',
         surface: rgb(surface) ?? '',
@@ -32,5 +35,6 @@ export const useThemeColors = () => {
         mutedForeground: rgb(mutedForeground) ?? '',
         primary: rgb(primary) ?? '',
         border: rgb(border) ?? '',
+        danger: rgb(danger) ?? '',
     };
 };

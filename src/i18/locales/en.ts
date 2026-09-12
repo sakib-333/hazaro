@@ -221,5 +221,20 @@ export default {
     /*──Game details───────────────────────*/
     gameDetails: {
         title: "Game Details",
+        actions: {
+            more: "More options",
+            addScore: "Add score",
+            deleteScore: "Delete score",
+        },
+        scoreboard: {
+            title: "Scoreboard",
+            rank: "Rank",
+            player: "Player",
+            score: "Score",
+        },
+        pointTable: {
+            title: "Point table",
+            round: "#",
+        },
     }
 };

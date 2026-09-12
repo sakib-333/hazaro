@@ -222,5 +222,20 @@ export default {
     /*──Game details───────────────────────*/
     gameDetails: {
         title: "খেলার বিবরণ",
+        actions: {
+            more: "আরও বিকল্প",
+            addScore: "স্কোর যোগ করুন",
+            deleteScore: "স্কোর মুছুন",
+        },
+        scoreboard: {
+            title: "স্কোরবোর্ড",
+            rank: "স্থান",
+            player: "খেলোয়াড়",
+            score: "স্কোর",
+        },
+        pointTable: {
+            title: "পয়েন্ট তালিকা",
+            round: "#",
+        },
     }
 };

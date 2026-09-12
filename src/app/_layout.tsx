@@ -1,5 +1,6 @@
+import AppHeader from '@/components/AppHeader';
 import { AppProvider } from '@/components/AppProvider';
-import SettingsHeader from '@/components/SettingsHeader';
+import GameDetailsHeaderActions from '@/components/header-right-action/GameDetailsHeaderActions';
 import { Stack } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import "../global.css";
@@ -28,8 +29,9 @@ const RootLayout = () => {
           options={{
             headerShown: true,
             header: () => (
-              <SettingsHeader
-                title={t("gameDetails.title")}
+              <AppHeader 
+                title={t('gameDetails.title')}
+                rightAction={<GameDetailsHeaderActions />}
               />
             ),
           }}
