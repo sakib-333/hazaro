@@ -5,11 +5,11 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import EmptyGames from "../components/EmptyGames";
-import GameCard from "../components/GameCard";
-import { demoData } from "../demo-data/demo.data";
+import EmptyGames from "./components/EmptyGames";
+import GameCard from "./components/GameCard";
+import { demoData } from "./demo-data/demo.data";
 
-const ViewGamesScreen = () => {
+const AllGamesScreen = () => {
     const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState("");
     const colors = useThemeColors();
@@ -69,4 +69,4 @@ const ViewGamesScreen = () => {
     );
 };
 
-export default ViewGamesScreen;
+export default AllGamesScreen;

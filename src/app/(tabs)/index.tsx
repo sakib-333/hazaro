@@ -1,8 +1,8 @@
-import ViewGamesScreen from "@/modules/games/view-games/screen/ViewGamesScreen";
+import AllGamesScreen from "@/modules/games/all-games/AllGamesScreen";
 
 const GamesRoute = () => {
     return (
-        <ViewGamesScreen />
+        <AllGamesScreen />
     );
 };
 

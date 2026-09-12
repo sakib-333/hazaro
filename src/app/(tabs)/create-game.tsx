@@ -1,4 +1,4 @@
-import CreateGameScreen from "@/modules/game/create-game/CreateGameScreen";
+import CreateGameScreen from "@/modules/games/create-game/CreateGameScreen";
 
 const CreateGameRoute = () => {
     return (
