@@ -35,7 +35,7 @@ const AppHeader = ({ title, rightAction }: AppHeaderProps) => {
 
                 <Text
                     numberOfLines={1}
-                    className="flex-1 text-xl text-foreground"
+                    className="flex-1 text-xl font-semibold text-foreground"
                 >
                     {title}
                 </Text>

@@ -1,5 +1,5 @@
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { EllipsisVertical } from "lucide-react-native";
+import { EllipsisVertical, Pencil, Trash2 } from "lucide-react-native";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
@@ -70,9 +70,10 @@ const GameDetailsHeaderActions = ({
                             accessibilityRole="button"
                             accessibilityLabel="Edit game"
                             onPress={handleEdit}
-                            className="px-4 py-3 active:bg-surface"
+                            className="px-4 py-3 active:bg-surface flex-row items-center gap-2"
                         >
-                            <Text className="text-base text-foreground text-center">
+                            <Pencil size={16} color={colors.foreground} />
+                            <Text className="text-base text-foreground">
                                 {t("gameDetails.headerActions.edit")}
                             </Text>
                         </Pressable>
@@ -83,9 +84,10 @@ const GameDetailsHeaderActions = ({
                             accessibilityRole="button"
                             accessibilityLabel="Delete game"
                             onPress={handleDelete}
-                            className="px-4 py-3 active:bg-surface"
+                            className="px-4 py-3 active:bg-surface flex-row items-center gap-2"
                         >
-                            <Text className="text-base text-danger text-center">
+                            <Trash2 size={16} color={colors.danger} />
+                            <Text className="text-base text-danger">
                                 {t("gameDetails.headerActions.delete")}
                             </Text>
                         </Pressable>

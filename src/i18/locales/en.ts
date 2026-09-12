@@ -271,8 +271,8 @@ export default {
     gameDetails: {
         title: "Game Details",
         headerActions: {
-            edit: "Edit game",
-            delete: "Delete game",
+            edit: "Edit",
+            delete: "Delete",
         },
         actions: {
             more: "More options",

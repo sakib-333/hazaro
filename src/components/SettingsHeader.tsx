@@ -27,7 +27,7 @@ const SettingsHeader = ({ title }: SettingsHeaderProps) => {
                     />
                 </Pressable>
 
-                <Text className="text-xl text-foreground">
+                <Text className="text-xl font-semibold text-foreground">
                     {title}
                 </Text>
             </View>
