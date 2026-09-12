@@ -4,11 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const ViewGameScreen = () => {
   return (
     <SafeAreaView
-      edges={["top", "left", "right"]}
+      edges={["left", "right"]}
       className="flex-1 bg-background px-5"
     >
       <View>
-        <Text>ViewGameScreen</Text>
+        <Text className='text-foreground'>ViewGameScreen</Text>
       </View>
     </SafeAreaView>
   )

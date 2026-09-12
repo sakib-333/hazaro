@@ -217,4 +217,9 @@ export default {
             },
         },
     },
+
+    /*──Game details───────────────────────*/
+    gameDetails: {
+        title: "Game Details",
+    }
 };

@@ -218,4 +218,9 @@ export default {
             },
         },
     },
+
+    /*──Game details───────────────────────*/
+    gameDetails: {
+        title: "খেলার বিবরণ",
+    }
 };

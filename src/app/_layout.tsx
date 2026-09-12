@@ -1,8 +1,11 @@
 import { AppProvider } from '@/components/AppProvider';
+import SettingsHeader from '@/components/SettingsHeader';
 import { Stack } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import "../global.css";
 
 const RootLayout = () => {
+  const { t } = useTranslation();
   return (
     <AppProvider>
       <Stack>
@@ -23,7 +26,12 @@ const RootLayout = () => {
         <Stack.Screen
           name="games/[gameId]"
           options={{
-            headerShown: false,
+            headerShown: true,
+            header: () => (
+              <SettingsHeader
+                title={t("gameDetails.title")}
+              />
+            ),
           }}
         />
       </Stack>
