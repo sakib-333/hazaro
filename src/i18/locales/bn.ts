@@ -290,5 +290,8 @@ export default {
             title: "পয়েন্ট তালিকা",
             round: "#",
         },
+        gameInfo: {
+            addScore: "স্কোর যোগ করুন",
+        }
     }
 };

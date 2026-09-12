@@ -289,5 +289,8 @@ export default {
             title: "Point table",
             round: "#",
         },
+        gameInfo: {
+            addScore: "Add score",
+        }
     }
 };

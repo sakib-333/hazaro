@@ -61,6 +61,7 @@ const GameDetailsScreen = () => {
               accessibilityRole="button"
               accessibilityLabel={t('gameDetails.actions.addScore')}
               className="min-h-8 flex-row items-center gap-1.5 rounded-lg border border-border px-2 active:opacity-60"
+              onPress={() => router.push('/games/[gameId]/add-score')}
             >
               <Plus size={16} color={colors.foreground} />
               <Text className="text-sm font-bold leading-[18px] text-foreground">
