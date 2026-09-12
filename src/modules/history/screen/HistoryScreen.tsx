@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import EmptyHistory from "../components/EmptyHistory";
@@ -21,7 +22,7 @@ const HistoryScreen = () => {
                         name={item.name}
                         createdAt={item.createdAt}
                         winner={item.winner}
-                        onPress={() => { }}
+                        onPress={() => router.push(`/games/${item.id}`)}
                     />
                 )}
                 ListEmptyComponent={
