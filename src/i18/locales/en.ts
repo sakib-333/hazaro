@@ -218,6 +218,12 @@ export default {
         },
     },
 
+    game: {
+        createGame: {
+            title: "Create Game",
+        }
+    },
+
     /*──Game details───────────────────────*/
     gameDetails: {
         title: "Game Details",

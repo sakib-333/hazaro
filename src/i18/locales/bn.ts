@@ -219,6 +219,12 @@ export default {
         },
     },
 
+    game: {
+        createGame: {
+            title: "খেলা তৈরি করুন",
+        },
+    },
+
     /*──Game details───────────────────────*/
     gameDetails: {
         title: "খেলার বিবরণ",
