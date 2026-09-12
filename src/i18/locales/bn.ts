@@ -222,6 +222,26 @@ export default {
     game: {
         createGame: {
             title: "খেলা তৈরি করুন",
+            gameSettings: "খেলার সেটিংস",
+            gameName: {
+                label: "খেলার নাম",
+                placeholder: "যেমন: শুক্রবার রাতের খেলা",
+                required: "খেলার নাম আবশ্যক",
+                minLength: "খেলার নাম কমপক্ষে ২ অক্ষরের হতে হবে",
+            },
+            winningScore: {
+                label: "জয়ের স্কোর",
+                placeholder: "১০০০",
+                unit: "পয়েন্ট",
+                required: "জয়ের স্কোর আবশ্যক",
+                min: "জয়ের স্কোর ০-এর বেশি হতে হবে",
+            },
+            players: "খেলোয়াড়রা",
+            player: {
+                placeholder: "খেলোয়াড় {{number}}",
+                required: "খেলোয়াড় {{number}}-এর নাম আবশ্যক",
+            },
+            submit: "খেলা তৈরি করুন",
         },
     },
 
