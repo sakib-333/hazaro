@@ -1,5 +1,5 @@
-import ViewGameScreen from "@/modules/game/view-game/screen/ViewGameScreen";
+import GameDetailsScreen from "@/modules/game/game-details/GameDetailsScreen";
 
 export default function GameDetailsRoute() {
-  return <ViewGameScreen />;
+  return <GameDetailsScreen />;
 }

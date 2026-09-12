@@ -21,7 +21,7 @@ const rounds = [
   { id: 'round-1', number: 1, scores: [49, 48, 37, 35] },
 ];
 
-const ViewGameScreen = () => {
+const GameDetailsScreen = () => {
   const { t } = useTranslation();
   const colors = useThemeColors();
 
@@ -170,4 +170,4 @@ const ViewGameScreen = () => {
   );
 };
 
-export default ViewGameScreen;
+export default GameDetailsScreen;
