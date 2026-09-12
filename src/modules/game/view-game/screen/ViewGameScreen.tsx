@@ -49,7 +49,7 @@ const ViewGameScreen = () => {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerClassName="px-4 pb-7 pt-3.5"
+        contentContainerClassName="px-5 pb-7 pt-3.5"
       >
         <View className="mb-[18px]">
           <View className="mb-1.5 min-h-[38px] flex-row items-center justify-between gap-3">
