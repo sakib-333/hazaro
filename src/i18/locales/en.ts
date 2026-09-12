@@ -241,6 +241,9 @@ export default {
                 required: "Player {{number}} name is required",
             },
             submit: "Create Game",
+        },
+        editGame: {
+            title: "Edit Game",
         }
     },
 

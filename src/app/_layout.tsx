@@ -1,6 +1,4 @@
-import AppHeader from '@/components/AppHeader';
 import { AppProvider } from '@/components/AppProvider';
-import GameDetailsHeaderActions from '@/components/header-right-action/GameDetailsHeaderActions';
 import { Stack } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import "../global.css";
@@ -27,18 +25,7 @@ const RootLayout = () => {
         <Stack.Screen
           name="games/[gameId]"
           options={{
-            headerShown: true,
-            header: () => (
-              <AppHeader
-                title={t('gameDetails.title')}
-                rightAction={
-                  <GameDetailsHeaderActions
-                    onEdit={() => console.log("Edit button pressed")}
-                    onDelete={() => console.log("Delete button pressed")}
-                  />
-                }
-              />
-            ),
+            headerShown: false,
           }}
         />
       </Stack>

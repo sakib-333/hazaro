@@ -1,4 +1,7 @@
+import AppHeader from '@/components/AppHeader';
+import GameDetailsHeaderActions from '@/components/header-right-action/GameDetailsHeaderActions';
 import { useThemeColors } from '@/hooks/useThemeColors';
+import { router, Stack } from 'expo-router';
 import { Plus, Trash2 } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, Text, View } from 'react-native';
@@ -27,6 +30,23 @@ const ViewGameScreen = () => {
       edges={["left", "right"]}
       className="flex-1 bg-background"
     >
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          header: () => (
+            <AppHeader
+              title={t("gameDetails.title")}
+              rightAction={
+                <GameDetailsHeaderActions
+                  onEdit={() => router.push('/games/[gameId]/edit')}
+                  onDelete={() => console.log("Delete button pressed")}
+                />
+              }
+            />
+          )
+        }}
+      />
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerClassName="px-4 pb-7 pt-3.5"

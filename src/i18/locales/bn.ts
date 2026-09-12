@@ -243,6 +243,9 @@ export default {
             },
             submit: "খেলা তৈরি করুন",
         },
+        editGame: {
+            title: "খেলা সম্পাদনা করুন",
+        }
     },
 
     /*──Game details───────────────────────*/
