@@ -244,6 +244,26 @@ export default {
         },
         editGame: {
             title: "Edit Game",
+            gameSettings: "Game Settings",
+            gameName: {
+                label: "Game Name",
+                placeholder: "e.g. Friday Night Game",
+                required: "Game name is required",
+                minLength: "Game name must be at least 2 characters",
+            },
+            winningScore: {
+                label: "Winning Score",
+                placeholder: "1000",
+                unit: "pts",
+                required: "Winning score is required",
+                min: "Winning score must be greater than 0",
+            },
+            players: "Players",
+            player: {
+                placeholder: "Player {{number}}",
+                required: "Player {{number}} name is required",
+            },
+            submit: "Save Changes",
         }
     },
 

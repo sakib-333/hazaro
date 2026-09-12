@@ -54,17 +54,18 @@ const CreateGameScreen = () => {
             <KeyboardAvoidingView
                 style={styles.keyboardView}
                 behavior="height"
+                className="px-5 pb-8"
             >
+                <View className="mb-4">
+                    <Text className="text-2xl font-bold text-primary">
+                        {t('game.createGame.title')}
+                    </Text>
+                </View>
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     keyboardShouldPersistTaps="handled"
-                    contentContainerClassName="flex-grow px-5 pb-8 pt-1.5"
+                    contentContainerClassName="flex-grow"
                 >
-                    <View className="mb-4">
-                        <Text className="text-2xl font-semibold leading-[30px] text-primary">
-                            {t('game.createGame.title')}
-                        </Text>
-                    </View>
 
                     <View className="mb-7">
                         <Text className="mb-4 text-base font-bold text-foreground">

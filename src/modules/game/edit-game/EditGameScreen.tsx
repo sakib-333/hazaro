@@ -1,32 +1,237 @@
-import AppHeader from '@/components/AppHeader'
-import { Stack } from 'expo-router'
-import { useTranslation } from 'react-i18next'
-import { Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import AppHeader from '@/components/AppHeader';
+import { useThemeColors } from '@/hooks/useThemeColors';
+import { Stack } from 'expo-router';
+import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import {
+    KeyboardAvoidingView,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+type EditGameFormData = {
+    name: string;
+    settings: {
+        winningScore: number;
+    };
+    players: Array<{
+        name: string;
+    }>;
+};
+
+const playerIndexes = [0, 1, 2, 3] as const;
 
 const EditGameScreen = () => {
     const { t } = useTranslation();
+    const colors = useThemeColors();
+
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<EditGameFormData>({
+        defaultValues: {
+            name: 'Friday Night Hazari',
+            settings: {
+                winningScore: 1000,
+            },
+            players: [
+                { name: 'Sakib' },
+                { name: 'Rahim' },
+                { name: 'Tanvir Ahmed' },
+                { name: 'Nadia' },
+            ],
+        },
+    });
+
+    const onSubmit = (data: EditGameFormData) => {
+        console.log('Edit game:', data);
+    };
+
     return (
         <SafeAreaView
-            edges={["left", "right"]}
-            className="flex-1 bg-background px-5"
+            edges={['left', 'right']}
+            className="flex-1 bg-surface"
         >
             <Stack.Screen
                 options={{
                     headerShown: true,
                     header: () => (
                         <AppHeader title={t('game.editGame.title')} />
-                    )
+                    ),
                 }}
             />
-            <View className="mb-4 flex-row items-center justify-between">
-                <Text className="text-2xl font-bold text-primary">
-                    Edit Game
-                </Text>
 
-            </View>
-        </SafeAreaView >
-    )
-}
+            <KeyboardAvoidingView
+                style={styles.keyboardView}
+                behavior="height"
+            >
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    keyboardShouldPersistTaps="handled"
+                    contentContainerClassName="flex-grow px-5 pb-8 pt-4"
+                >
+                    <View className="mb-7">
+                        <Text className="mb-4 text-base font-bold text-foreground">
+                            {t('game.editGame.gameSettings')}
+                        </Text>
 
-export default EditGameScreen
+                        <View className="mb-[18px]">
+                            <Text className="mb-2 text-[13px] font-semibold text-foreground">
+                                {t('game.editGame.gameName.label')}
+                            </Text>
+
+                            <Controller
+                                control={control}
+                                name="name"
+                                rules={{
+                                    required: t('game.editGame.gameName.required'),
+                                    minLength: {
+                                        value: 2,
+                                        message: t('game.editGame.gameName.minLength'),
+                                    },
+                                }}
+                                render={({ field: { value, onChange, onBlur } }) => (
+                                    <TextInput
+                                        value={value}
+                                        onChangeText={onChange}
+                                        onBlur={onBlur}
+                                        placeholder={t('game.editGame.gameName.placeholder')}
+                                        placeholderTextColor={colors.mutedForeground}
+                                        returnKeyType="next"
+                                        className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${errors.name ? 'border-danger' : 'border-border'}`}
+                                    />
+                                )}
+                            />
+
+                            {errors.name?.message && (
+                                <Text className="mt-1.5 text-xs leading-4 text-danger">
+                                    {errors.name.message}
+                                </Text>
+                            )}
+                        </View>
+
+                        <View>
+                            <Text className="mb-2 text-[13px] font-semibold text-foreground">
+                                {t('game.editGame.winningScore.label')}
+                            </Text>
+
+                            <Controller
+                                control={control}
+                                name="settings.winningScore"
+                                rules={{
+                                    required: t('game.editGame.winningScore.required'),
+                                    min: {
+                                        value: 1,
+                                        message: t('game.editGame.winningScore.min'),
+                                    },
+                                }}
+                                render={({ field: { value, onChange, onBlur } }) => (
+                                    <View
+                                        className={`h-[50px] flex-row items-center rounded-[10px] border bg-background ${errors.settings?.winningScore ? 'border-danger' : 'border-border'}`}
+                                    >
+                                        <TextInput
+                                            value={value ? String(value) : ''}
+                                            onBlur={onBlur}
+                                            onChangeText={(text) => {
+                                                const numericValue = text.replace(/[^0-9]/g, '');
+                                                onChange(numericValue ? Number(numericValue) : 0);
+                                            }}
+                                            keyboardType="number-pad"
+                                            placeholder={t('game.editGame.winningScore.placeholder')}
+                                            placeholderTextColor={colors.mutedForeground}
+                                            returnKeyType="next"
+                                            className="h-full flex-1 px-3.5 text-[15px] text-foreground"
+                                        />
+
+                                        <Text className="mr-3.5 text-[13px] font-semibold text-muted-foreground">
+                                            {t('game.editGame.winningScore.unit')}
+                                        </Text>
+                                    </View>
+                                )}
+                            />
+
+                            {errors.settings?.winningScore?.message && (
+                                <Text className="mt-1.5 text-xs leading-4 text-danger">
+                                    {errors.settings.winningScore.message}
+                                </Text>
+                            )}
+                        </View>
+                    </View>
+
+                    <View className="mb-7">
+                        <Text className="mb-4 text-base font-bold text-foreground">
+                            {t('game.editGame.players')}
+                        </Text>
+
+                        <View className="gap-3.5">
+                            {playerIndexes.map((index) => (
+                                <View key={index} className="flex-row items-start">
+                                    <View className="mr-2.5 mt-[9px] h-8 w-8 items-center justify-center rounded-lg bg-background">
+                                        <Text className="text-xs font-bold text-muted-foreground">
+                                            {index + 1}
+                                        </Text>
+                                    </View>
+
+                                    <View className="flex-1">
+                                        <Controller
+                                            control={control}
+                                            name={`players.${index}.name`}
+                                            rules={{
+                                                required: t('game.editGame.player.required', {
+                                                    number: index + 1,
+                                                }),
+                                            }}
+                                            render={({ field: { value, onChange, onBlur } }) => (
+                                                <TextInput
+                                                    value={value}
+                                                    onChangeText={onChange}
+                                                    onBlur={onBlur}
+                                                    placeholder={t('game.editGame.player.placeholder', {
+                                                        number: index + 1,
+                                                    })}
+                                                    placeholderTextColor={colors.mutedForeground}
+                                                    returnKeyType={index === 3 ? 'done' : 'next'}
+                                                    className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${errors.players?.[index]?.name ? 'border-danger' : 'border-border'}`}
+                                                />
+                                            )}
+                                        />
+
+                                        {errors.players?.[index]?.name?.message && (
+                                            <Text className="mt-1.5 text-xs leading-4 text-danger">
+                                                {errors.players[index]?.name?.message}
+                                            </Text>
+                                        )}
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+                    </View>
+
+                    <Pressable
+                        accessibilityRole="button"
+                        onPress={handleSubmit(onSubmit)}
+                        className="mt-0.5 h-[52px] items-center justify-center rounded-[10px] bg-primary active:opacity-80"
+                    >
+                        <Text className="text-[15px] font-bold text-primary-foreground">
+                            {t('game.editGame.submit')}
+                        </Text>
+                    </Pressable>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
+    );
+};
+
+const styles = StyleSheet.create({
+    keyboardView: {
+        flex: 1,
+    },
+});
+
+export default EditGameScreen;
