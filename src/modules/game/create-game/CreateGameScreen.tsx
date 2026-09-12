@@ -3,12 +3,12 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
     KeyboardAvoidingView,
-    Platform,
     Pressable,
     ScrollView,
+    StyleSheet,
     Text,
     TextInput,
-    View,
+    View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -52,13 +52,12 @@ const CreateGameScreen = () => {
             className="flex-1 bg-surface"
         >
             <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                className="flex-1"
+                style={styles.keyboardView}
+                behavior="height"
             >
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     keyboardShouldPersistTaps="handled"
-                    keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
                     contentContainerClassName="flex-grow px-5 pb-8 pt-1.5"
                 >
                     <View className="mb-4">
@@ -218,5 +217,11 @@ const CreateGameScreen = () => {
         </SafeAreaView>
     );
 };
+
+const styles = StyleSheet.create({
+    keyboardView: {
+        flex: 1,
+    }
+})
 
 export default CreateGameScreen;
