@@ -221,6 +221,10 @@ export default {
     /*──Game details───────────────────────*/
     gameDetails: {
         title: "Game Details",
+        headerActions: {
+            edit: "Edit game",
+            delete: "Delete game",
+        },
         actions: {
             more: "More options",
             addScore: "Add score",

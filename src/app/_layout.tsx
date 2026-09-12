@@ -29,9 +29,14 @@ const RootLayout = () => {
           options={{
             headerShown: true,
             header: () => (
-              <AppHeader 
+              <AppHeader
                 title={t('gameDetails.title')}
-                rightAction={<GameDetailsHeaderActions />}
+                rightAction={
+                  <GameDetailsHeaderActions
+                    onEdit={() => console.log("Edit button pressed")}
+                    onDelete={() => console.log("Delete button pressed")}
+                  />
+                }
               />
             ),
           }}

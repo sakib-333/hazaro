@@ -222,6 +222,10 @@ export default {
     /*──Game details───────────────────────*/
     gameDetails: {
         title: "খেলার বিবরণ",
+        headerActions: {
+            edit: "সম্পাদনা",
+            delete: "মুছুন",
+        },
         actions: {
             more: "আরও বিকল্প",
             addScore: "স্কোর যোগ করুন",
