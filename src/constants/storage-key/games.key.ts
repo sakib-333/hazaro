@@ -1,0 +1,1 @@
+export const GAMES_STORAGE_KEY = 'hazaro_games_key'

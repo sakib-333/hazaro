@@ -1,4 +1,5 @@
 import { useThemeColors } from '@/hooks/useThemeColors';
+import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -8,9 +9,12 @@ import {
     StyleSheet,
     Text,
     TextInput,
-    View
+    View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { getDefaultWinningScore } from '@/modules/settings/default-winning-score/services/getDefaultWinningScore';
+import { createGame } from './services/createGame';
 
 type CreateGameFormData = {
     name: string;
@@ -31,6 +35,8 @@ const CreateGameScreen = () => {
     const {
         control,
         handleSubmit,
+        resetField,
+        setValue,
         formState: { errors },
     } = useForm<CreateGameFormData>({
         defaultValues: {
@@ -42,8 +48,38 @@ const CreateGameScreen = () => {
         },
     });
 
-    const onSubmit = (data: CreateGameFormData) => {
-        console.log('Create game:', data);
+    useEffect(() => {
+        const loadDefaultWinningScore = async () => {
+            const defaultWinningScore = await getDefaultWinningScore();
+
+            setValue('settings.winningScore', defaultWinningScore);
+        };
+
+        loadDefaultWinningScore();
+    }, [setValue]);
+
+    const onSubmit = async (data: CreateGameFormData) => {
+        try {
+            const game = await createGame({
+                name: data.name,
+                playerNames: data.players.map((player) => player.name),
+                winningScore: data.settings.winningScore,
+            });
+
+            console.log('Game created:', game);
+
+            resetField('name');
+
+            playerIndexes.forEach((index) => {
+                resetField(`players.${index}.name`);
+            });
+
+            const defaultWinningScore = await getDefaultWinningScore();
+
+            setValue('settings.winningScore', defaultWinningScore);
+        } catch (error) {
+            console.error('Failed to create game:', error);
+        }
     };
 
     return (
@@ -61,17 +97,13 @@ const CreateGameScreen = () => {
                         {t('game.createGame.title')}
                     </Text>
                 </View>
+
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     keyboardShouldPersistTaps="handled"
                     contentContainerClassName="flex-grow"
                 >
-
                     <View className="mb-7">
-                        <Text className="mb-4 text-base font-bold text-foreground">
-                            {t('game.createGame.gameSettings')}
-                        </Text>
-
                         <View className="mb-[18px]">
                             <Text className="mb-2 text-[13px] font-semibold text-foreground">
                                 {t('game.createGame.gameName.label')}
@@ -95,7 +127,9 @@ const CreateGameScreen = () => {
                                         placeholder={t('game.createGame.gameName.placeholder')}
                                         placeholderTextColor={colors.mutedForeground}
                                         returnKeyType="next"
-                                        className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${errors.name ? 'border-danger' : 'border-border'}`}
+                                        className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${
+                                            errors.name ? 'border-danger' : 'border-border'
+                                        }`}
                                     />
                                 )}
                             />
@@ -124,18 +158,31 @@ const CreateGameScreen = () => {
                                 }}
                                 render={({ field: { value, onChange, onBlur } }) => (
                                     <View
-                                        className={`h-[50px] flex-row items-center rounded-[10px] border bg-background ${errors.settings?.winningScore ? 'border-danger' : 'border-border'}`}
+                                        className={`h-[50px] flex-row items-center rounded-[10px] border bg-background ${
+                                            errors.settings?.winningScore
+                                                ? 'border-danger'
+                                                : 'border-border'
+                                        }`}
                                     >
                                         <TextInput
                                             value={value ? String(value) : ''}
                                             onBlur={onBlur}
                                             onChangeText={(text) => {
                                                 const numericValue = text.replace(/[^0-9]/g, '');
-                                                onChange(numericValue ? Number(numericValue) : 0);
+
+                                                onChange(
+                                                    numericValue
+                                                        ? Number(numericValue)
+                                                        : 0
+                                                );
                                             }}
                                             keyboardType="number-pad"
-                                            placeholder={t('game.createGame.winningScore.placeholder')}
-                                            placeholderTextColor={colors.mutedForeground}
+                                            placeholder={t(
+                                                'game.createGame.winningScore.placeholder'
+                                            )}
+                                            placeholderTextColor={
+                                                colors.mutedForeground
+                                            }
                                             returnKeyType="next"
                                             className="h-full flex-1 px-3.5 text-[15px] text-foreground"
                                         />
@@ -162,7 +209,10 @@ const CreateGameScreen = () => {
 
                         <View className="gap-3.5">
                             {playerIndexes.map((index) => (
-                                <View key={index} className="flex-row items-start">
+                                <View
+                                    key={index}
+                                    className="flex-row items-start"
+                                >
                                     <View className="mr-2.5 mt-[9px] h-8 w-8 items-center justify-center rounded-lg bg-background">
                                         <Text className="text-xs font-bold text-muted-foreground">
                                             {index + 1}
@@ -174,28 +224,55 @@ const CreateGameScreen = () => {
                                             control={control}
                                             name={`players.${index}.name`}
                                             rules={{
-                                                required: t('game.createGame.player.required', {
-                                                    number: index + 1,
-                                                }),
+                                                required: t(
+                                                    'game.createGame.player.required',
+                                                    {
+                                                        number: index + 1,
+                                                    }
+                                                ),
                                             }}
-                                            render={({ field: { value, onChange, onBlur } }) => (
+                                            render={({
+                                                field: {
+                                                    value,
+                                                    onChange,
+                                                    onBlur,
+                                                },
+                                            }) => (
                                                 <TextInput
                                                     value={value}
                                                     onChangeText={onChange}
                                                     onBlur={onBlur}
-                                                    placeholder={t('game.createGame.player.placeholder', {
-                                                        number: index + 1,
-                                                    })}
-                                                    placeholderTextColor={colors.mutedForeground}
-                                                    returnKeyType={index === 3 ? 'done' : 'next'}
-                                                    className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${errors.players?.[index]?.name ? 'border-danger' : 'border-border'}`}
+                                                    placeholder={t(
+                                                        'game.createGame.player.placeholder',
+                                                        {
+                                                            number: index + 1,
+                                                        }
+                                                    )}
+                                                    placeholderTextColor={
+                                                        colors.mutedForeground
+                                                    }
+                                                    returnKeyType={
+                                                        index === 3
+                                                            ? 'done'
+                                                            : 'next'
+                                                    }
+                                                    className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${
+                                                        errors.players?.[index]
+                                                            ?.name
+                                                            ? 'border-danger'
+                                                            : 'border-border'
+                                                    }`}
                                                 />
                                             )}
                                         />
 
-                                        {errors.players?.[index]?.name?.message && (
+                                        {errors.players?.[index]?.name
+                                            ?.message && (
                                             <Text className="mt-1.5 text-xs leading-4 text-danger">
-                                                {errors.players[index]?.name?.message}
+                                                {
+                                                    errors.players[index]?.name
+                                                        ?.message
+                                                }
                                             </Text>
                                         )}
                                     </View>
@@ -222,7 +299,7 @@ const CreateGameScreen = () => {
 const styles = StyleSheet.create({
     keyboardView: {
         flex: 1,
-    }
-})
+    },
+});
 
 export default CreateGameScreen;
