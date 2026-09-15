@@ -1,5 +1,6 @@
 import { useThemeColors } from '@/hooks/useThemeColors';
-import { useEffect } from 'react';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -31,6 +32,7 @@ const playerIndexes = [0, 1, 2, 3] as const;
 const CreateGameScreen = () => {
     const { t } = useTranslation();
     const colors = useThemeColors();
+    const router = useRouter();
 
     const {
         control,
@@ -48,25 +50,38 @@ const CreateGameScreen = () => {
         },
     });
 
-    useEffect(() => {
-        const loadDefaultWinningScore = async () => {
-            const defaultWinningScore = await getDefaultWinningScore();
+    useFocusEffect(
+        useCallback(() => {
+            const loadDefaultWinningScore = async () => {
+                try {
+                    const defaultWinningScore =
+                        await getDefaultWinningScore();
 
-            setValue('settings.winningScore', defaultWinningScore);
-        };
+                    setValue(
+                        'settings.winningScore',
+                        defaultWinningScore
+                    );
+                } catch (error) {
+                    console.error(
+                        'Failed to load default winning score:',
+                        error
+                    );
+                }
+            };
 
-        loadDefaultWinningScore();
-    }, [setValue]);
+            loadDefaultWinningScore();
+        }, [setValue])
+    );
 
     const onSubmit = async (data: CreateGameFormData) => {
         try {
             const game = await createGame({
                 name: data.name,
-                playerNames: data.players.map((player) => player.name),
+                playerNames: data.players.map(
+                    (player) => player.name
+                ),
                 winningScore: data.settings.winningScore,
             });
-
-            console.log('Game created:', game);
 
             resetField('name');
 
@@ -74,9 +89,12 @@ const CreateGameScreen = () => {
                 resetField(`players.${index}.name`);
             });
 
-            const defaultWinningScore = await getDefaultWinningScore();
-
-            setValue('settings.winningScore', defaultWinningScore);
+            router.push({
+                pathname: '/games/[gameId]',
+                params: {
+                    gameId: game.id,
+                },
+            });
         } catch (error) {
             console.error('Failed to create game:', error);
         }
@@ -113,23 +131,38 @@ const CreateGameScreen = () => {
                                 control={control}
                                 name="name"
                                 rules={{
-                                    required: t('game.createGame.gameName.required'),
+                                    required: t(
+                                        'game.createGame.gameName.required'
+                                    ),
                                     minLength: {
                                         value: 2,
-                                        message: t('game.createGame.gameName.minLength'),
+                                        message: t(
+                                            'game.createGame.gameName.minLength'
+                                        ),
                                     },
                                 }}
-                                render={({ field: { value, onChange, onBlur } }) => (
+                                render={({
+                                    field: {
+                                        value,
+                                        onChange,
+                                        onBlur,
+                                    },
+                                }) => (
                                     <TextInput
                                         value={value}
                                         onChangeText={onChange}
                                         onBlur={onBlur}
-                                        placeholder={t('game.createGame.gameName.placeholder')}
-                                        placeholderTextColor={colors.mutedForeground}
+                                        placeholder={t(
+                                            'game.createGame.gameName.placeholder'
+                                        )}
+                                        placeholderTextColor={
+                                            colors.mutedForeground
+                                        }
                                         returnKeyType="next"
-                                        className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${
-                                            errors.name ? 'border-danger' : 'border-border'
-                                        }`}
+                                        className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${errors.name
+                                                ? 'border-danger'
+                                                : 'border-border'
+                                            }`}
                                     />
                                 )}
                             />
@@ -143,36 +176,58 @@ const CreateGameScreen = () => {
 
                         <View>
                             <Text className="mb-2 text-[13px] font-semibold text-foreground">
-                                {t('game.createGame.winningScore.label')}
+                                {t(
+                                    'game.createGame.winningScore.label'
+                                )}
                             </Text>
 
                             <Controller
                                 control={control}
                                 name="settings.winningScore"
                                 rules={{
-                                    required: t('game.createGame.winningScore.required'),
+                                    required: t(
+                                        'game.createGame.winningScore.required'
+                                    ),
                                     min: {
                                         value: 1,
-                                        message: t('game.createGame.winningScore.min'),
+                                        message: t(
+                                            'game.createGame.winningScore.min'
+                                        ),
                                     },
                                 }}
-                                render={({ field: { value, onChange, onBlur } }) => (
+                                render={({
+                                    field: {
+                                        value,
+                                        onChange,
+                                        onBlur,
+                                    },
+                                }) => (
                                     <View
-                                        className={`h-[50px] flex-row items-center rounded-[10px] border bg-background ${
-                                            errors.settings?.winningScore
+                                        className={`h-[50px] flex-row items-center rounded-[10px] border bg-background ${errors.settings
+                                                ?.winningScore
                                                 ? 'border-danger'
                                                 : 'border-border'
-                                        }`}
+                                            }`}
                                     >
                                         <TextInput
-                                            value={value ? String(value) : ''}
+                                            value={
+                                                value
+                                                    ? String(value)
+                                                    : ''
+                                            }
                                             onBlur={onBlur}
                                             onChangeText={(text) => {
-                                                const numericValue = text.replace(/[^0-9]/g, '');
+                                                const numericValue =
+                                                    text.replace(
+                                                        /[^0-9]/g,
+                                                        ''
+                                                    );
 
                                                 onChange(
                                                     numericValue
-                                                        ? Number(numericValue)
+                                                        ? Number(
+                                                            numericValue
+                                                        )
                                                         : 0
                                                 );
                                             }}
@@ -188,17 +243,23 @@ const CreateGameScreen = () => {
                                         />
 
                                         <Text className="mr-3.5 text-[13px] font-semibold text-muted-foreground">
-                                            {t('game.createGame.winningScore.unit')}
+                                            {t(
+                                                'game.createGame.winningScore.unit'
+                                            )}
                                         </Text>
                                     </View>
                                 )}
                             />
 
-                            {errors.settings?.winningScore?.message && (
-                                <Text className="mt-1.5 text-xs leading-4 text-danger">
-                                    {errors.settings.winningScore.message}
-                                </Text>
-                            )}
+                            {errors.settings?.winningScore
+                                ?.message && (
+                                    <Text className="mt-1.5 text-xs leading-4 text-danger">
+                                        {
+                                            errors.settings
+                                                .winningScore.message
+                                        }
+                                    </Text>
+                                )}
                         </View>
                     </View>
 
@@ -227,7 +288,9 @@ const CreateGameScreen = () => {
                                                 required: t(
                                                     'game.createGame.player.required',
                                                     {
-                                                        number: index + 1,
+                                                        number:
+                                                            index +
+                                                            1,
                                                     }
                                                 ),
                                             }}
@@ -240,41 +303,51 @@ const CreateGameScreen = () => {
                                             }) => (
                                                 <TextInput
                                                     value={value}
-                                                    onChangeText={onChange}
+                                                    onChangeText={
+                                                        onChange
+                                                    }
                                                     onBlur={onBlur}
                                                     placeholder={t(
                                                         'game.createGame.player.placeholder',
                                                         {
-                                                            number: index + 1,
+                                                            number:
+                                                                index +
+                                                                1,
                                                         }
                                                     )}
                                                     placeholderTextColor={
                                                         colors.mutedForeground
                                                     }
                                                     returnKeyType={
-                                                        index === 3
+                                                        index ===
+                                                            3
                                                             ? 'done'
                                                             : 'next'
                                                     }
-                                                    className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${
-                                                        errors.players?.[index]
-                                                            ?.name
+                                                    className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${errors
+                                                            .players?.[
+                                                            index
+                                                        ]?.name
                                                             ? 'border-danger'
                                                             : 'border-border'
-                                                    }`}
+                                                        }`}
                                                 />
                                             )}
                                         />
 
-                                        {errors.players?.[index]?.name
-                                            ?.message && (
-                                            <Text className="mt-1.5 text-xs leading-4 text-danger">
-                                                {
-                                                    errors.players[index]?.name
-                                                        ?.message
-                                                }
-                                            </Text>
-                                        )}
+                                        {errors.players?.[
+                                            index
+                                        ]?.name?.message && (
+                                                <Text className="mt-1.5 text-xs leading-4 text-danger">
+                                                    {
+                                                        errors
+                                                            .players[
+                                                            index
+                                                        ]?.name
+                                                            ?.message
+                                                    }
+                                                </Text>
+                                            )}
                                     </View>
                                 </View>
                             ))}
