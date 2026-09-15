@@ -29,7 +29,7 @@ export const addRound = async (
 
     const existingGame = games[gameIndex];
 
-    const now = new Date().toISOString();
+    const now = Date.now();
 
     const updatedGame: Game = {
         ...existingGame,

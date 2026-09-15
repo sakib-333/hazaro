@@ -32,8 +32,8 @@ export const createGame = async ({
             winningScore,
         },
 
-        createdAt: String(timestamp),
-        updatedAt: String(timestamp),
+        createdAt: timestamp,
+        updatedAt: timestamp,
     };
 
     const storedGames = await AsyncStorage.getItem(GAMES_STORAGE_KEY);

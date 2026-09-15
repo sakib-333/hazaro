@@ -11,6 +11,6 @@ export type Game = {
     players: Player[]
     rounds: Round[]
     settings: GameSettings
-    createdAt: string
-    updatedAt: string
+    createdAt: number
+    updatedAt: number
 }

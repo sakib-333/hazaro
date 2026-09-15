@@ -100,7 +100,7 @@ const AllGamesScreen = () => {
                 renderItem={({ item }) => (
                     <GameCard
                         name={item.name}
-                        createdAt={Number(item.createdAt ?? Date.now())}
+                        createdAt={item.createdAt }
                         onPress={() =>
                             router.push({
                                 pathname: '/games/[gameId]',
