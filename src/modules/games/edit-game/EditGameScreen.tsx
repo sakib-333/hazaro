@@ -1,6 +1,12 @@
 import AppHeader from '@/components/AppHeader';
 import { useThemeColors } from '@/hooks/useThemeColors';
-import { Stack } from 'expo-router';
+import {
+    router,
+    Stack,
+    useFocusEffect,
+    useLocalSearchParams,
+} from 'expo-router';
+import { useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -13,6 +19,9 @@ import {
     View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { getGameById } from '../services/getGameById';
+import { updateGame } from '../services/updateGame';
 
 type EditGameFormData = {
     name: string;
@@ -30,27 +39,77 @@ const EditGameScreen = () => {
     const { t } = useTranslation();
     const colors = useThemeColors();
 
+    const { gameId } = useLocalSearchParams<{
+        gameId: string;
+    }>();
+
     const {
         control,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm<EditGameFormData>({
         defaultValues: {
-            name: 'Friday Night Hazari',
+            name: '',
             settings: {
                 winningScore: 1000,
             },
-            players: [
-                { name: 'Sakib' },
-                { name: 'Rahim' },
-                { name: 'Tanvir Ahmed' },
-                { name: 'Nadia' },
-            ],
+            players: playerIndexes.map(() => ({
+                name: '',
+            })),
         },
     });
 
-    const onSubmit = (data: EditGameFormData) => {
-        console.log('Edit game:', data);
+    useFocusEffect(
+        useCallback(() => {
+            const loadGame = async () => {
+                if (!gameId) {
+                    return;
+                }
+
+                try {
+                    const game = await getGameById(gameId);
+
+                    if (!game) {
+                        return;
+                    }
+
+                    reset({
+                        name: game.name,
+                        settings: {
+                            winningScore: game.settings.winningScore,
+                        },
+                        players: playerIndexes.map((index) => ({
+                            name: game.players[index]?.name ?? '',
+                        })),
+                    });
+                } catch (error) {
+                    console.error('Failed to load game:', error);
+                }
+            };
+
+            loadGame();
+        }, [gameId, reset])
+    );
+
+    const onSubmit = async (data: EditGameFormData) => {
+        if (!gameId) {
+            return;
+        }
+
+        try {
+            await updateGame(gameId, {
+                name: data.name,
+                playerNames: data.players.map(
+                    (player) => player.name
+                ),
+                winningScore: data.settings.winningScore,
+            });
+
+            router.back();
+        } catch (error) {
+            console.error('Failed to update game:', error);
+        }
     };
 
     return (
@@ -62,7 +121,9 @@ const EditGameScreen = () => {
                 options={{
                     headerShown: true,
                     header: () => (
-                        <AppHeader title={t('game.editGame.title')} />
+                        <AppHeader
+                            title={t('game.editGame.title')}
+                        />
                     ),
                 }}
             />
@@ -90,21 +151,38 @@ const EditGameScreen = () => {
                                 control={control}
                                 name="name"
                                 rules={{
-                                    required: t('game.editGame.gameName.required'),
+                                    required: t(
+                                        'game.editGame.gameName.required'
+                                    ),
                                     minLength: {
                                         value: 2,
-                                        message: t('game.editGame.gameName.minLength'),
+                                        message: t(
+                                            'game.editGame.gameName.minLength'
+                                        ),
                                     },
                                 }}
-                                render={({ field: { value, onChange, onBlur } }) => (
+                                render={({
+                                    field: {
+                                        value,
+                                        onChange,
+                                        onBlur,
+                                    },
+                                }) => (
                                     <TextInput
                                         value={value}
                                         onChangeText={onChange}
                                         onBlur={onBlur}
-                                        placeholder={t('game.editGame.gameName.placeholder')}
-                                        placeholderTextColor={colors.mutedForeground}
+                                        placeholder={t(
+                                            'game.editGame.gameName.placeholder'
+                                        )}
+                                        placeholderTextColor={
+                                            colors.mutedForeground
+                                        }
                                         returnKeyType="next"
-                                        className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${errors.name ? 'border-danger' : 'border-border'}`}
+                                        className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${errors.name
+                                                ? 'border-danger'
+                                                : 'border-border'
+                                            }`}
                                     />
                                 )}
                             />
@@ -118,49 +196,90 @@ const EditGameScreen = () => {
 
                         <View>
                             <Text className="mb-2 text-[13px] font-semibold text-foreground">
-                                {t('game.editGame.winningScore.label')}
+                                {t(
+                                    'game.editGame.winningScore.label'
+                                )}
                             </Text>
 
                             <Controller
                                 control={control}
                                 name="settings.winningScore"
                                 rules={{
-                                    required: t('game.editGame.winningScore.required'),
+                                    required: t(
+                                        'game.editGame.winningScore.required'
+                                    ),
                                     min: {
                                         value: 1,
-                                        message: t('game.editGame.winningScore.min'),
+                                        message: t(
+                                            'game.editGame.winningScore.min'
+                                        ),
                                     },
                                 }}
-                                render={({ field: { value, onChange, onBlur } }) => (
+                                render={({
+                                    field: {
+                                        value,
+                                        onChange,
+                                        onBlur,
+                                    },
+                                }) => (
                                     <View
-                                        className={`h-[50px] flex-row items-center rounded-[10px] border bg-background ${errors.settings?.winningScore ? 'border-danger' : 'border-border'}`}
+                                        className={`h-[50px] flex-row items-center rounded-[10px] border bg-background ${errors.settings
+                                                ?.winningScore
+                                                ? 'border-danger'
+                                                : 'border-border'
+                                            }`}
                                     >
                                         <TextInput
-                                            value={value ? String(value) : ''}
+                                            value={
+                                                value
+                                                    ? String(value)
+                                                    : ''
+                                            }
                                             onBlur={onBlur}
                                             onChangeText={(text) => {
-                                                const numericValue = text.replace(/[^0-9]/g, '');
-                                                onChange(numericValue ? Number(numericValue) : 0);
+                                                const numericValue =
+                                                    text.replace(
+                                                        /[^0-9]/g,
+                                                        ''
+                                                    );
+
+                                                onChange(
+                                                    numericValue
+                                                        ? Number(
+                                                            numericValue
+                                                        )
+                                                        : 0
+                                                );
                                             }}
                                             keyboardType="number-pad"
-                                            placeholder={t('game.editGame.winningScore.placeholder')}
-                                            placeholderTextColor={colors.mutedForeground}
+                                            placeholder={t(
+                                                'game.editGame.winningScore.placeholder'
+                                            )}
+                                            placeholderTextColor={
+                                                colors.mutedForeground
+                                            }
                                             returnKeyType="next"
                                             className="h-full flex-1 px-3.5 text-[15px] text-foreground"
                                         />
 
                                         <Text className="mr-3.5 text-[13px] font-semibold text-muted-foreground">
-                                            {t('game.editGame.winningScore.unit')}
+                                            {t(
+                                                'game.editGame.winningScore.unit'
+                                            )}
                                         </Text>
                                     </View>
                                 )}
                             />
 
-                            {errors.settings?.winningScore?.message && (
-                                <Text className="mt-1.5 text-xs leading-4 text-danger">
-                                    {errors.settings.winningScore.message}
-                                </Text>
-                            )}
+                            {errors.settings?.winningScore
+                                ?.message && (
+                                    <Text className="mt-1.5 text-xs leading-4 text-danger">
+                                        {
+                                            errors.settings
+                                                .winningScore.message
+                                        }
+                                    </Text>
+                                )}
                         </View>
                     </View>
 
@@ -171,7 +290,10 @@ const EditGameScreen = () => {
 
                         <View className="gap-3.5">
                             {playerIndexes.map((index) => (
-                                <View key={index} className="flex-row items-start">
+                                <View
+                                    key={index}
+                                    className="flex-row items-start"
+                                >
                                     <View className="mr-2.5 mt-[9px] h-8 w-8 items-center justify-center rounded-lg bg-background">
                                         <Text className="text-xs font-bold text-muted-foreground">
                                             {index + 1}
@@ -183,30 +305,69 @@ const EditGameScreen = () => {
                                             control={control}
                                             name={`players.${index}.name`}
                                             rules={{
-                                                required: t('game.editGame.player.required', {
-                                                    number: index + 1,
-                                                }),
+                                                required: t(
+                                                    'game.editGame.player.required',
+                                                    {
+                                                        number:
+                                                            index +
+                                                            1,
+                                                    }
+                                                ),
                                             }}
-                                            render={({ field: { value, onChange, onBlur } }) => (
+                                            render={({
+                                                field: {
+                                                    value,
+                                                    onChange,
+                                                    onBlur,
+                                                },
+                                            }) => (
                                                 <TextInput
                                                     value={value}
-                                                    onChangeText={onChange}
+                                                    onChangeText={
+                                                        onChange
+                                                    }
                                                     onBlur={onBlur}
-                                                    placeholder={t('game.editGame.player.placeholder', {
-                                                        number: index + 1,
-                                                    })}
-                                                    placeholderTextColor={colors.mutedForeground}
-                                                    returnKeyType={index === 3 ? 'done' : 'next'}
-                                                    className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${errors.players?.[index]?.name ? 'border-danger' : 'border-border'}`}
+                                                    placeholder={t(
+                                                        'game.editGame.player.placeholder',
+                                                        {
+                                                            number:
+                                                                index +
+                                                                1,
+                                                        }
+                                                    )}
+                                                    placeholderTextColor={
+                                                        colors.mutedForeground
+                                                    }
+                                                    returnKeyType={
+                                                        index ===
+                                                            3
+                                                            ? 'done'
+                                                            : 'next'
+                                                    }
+                                                    className={`h-[50px] rounded-[10px] border bg-background px-3.5 text-[15px] text-foreground ${errors
+                                                            .players?.[
+                                                            index
+                                                        ]?.name
+                                                            ? 'border-danger'
+                                                            : 'border-border'
+                                                        }`}
                                                 />
                                             )}
                                         />
 
-                                        {errors.players?.[index]?.name?.message && (
-                                            <Text className="mt-1.5 text-xs leading-4 text-danger">
-                                                {errors.players[index]?.name?.message}
-                                            </Text>
-                                        )}
+                                        {errors.players?.[
+                                            index
+                                        ]?.name?.message && (
+                                                <Text className="mt-1.5 text-xs leading-4 text-danger">
+                                                    {
+                                                        errors
+                                                            .players[
+                                                            index
+                                                        ]?.name
+                                                            ?.message
+                                                    }
+                                                </Text>
+                                            )}
                                     </View>
                                 </View>
                             ))}
