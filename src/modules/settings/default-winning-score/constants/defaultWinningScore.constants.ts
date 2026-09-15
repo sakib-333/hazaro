@@ -1,0 +1,1 @@
+export const DEFAULT_WINNING_SCORE = 1000

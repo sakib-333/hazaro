@@ -1,15 +1,8 @@
-import { Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import DefaultWinningScoreScreen from "@/modules/settings/default-winning-score/screen/DefaultWinningScoreScreen";
 
 const DefaultWinningScoreRoute = () => {
     return (
-        <SafeAreaView edges={["top", "left", "right"]} className="flex-1 px-4 bg-background">
-            <View>
-                <Text className="text-2xl font-bold text-primary">
-                    Default Winning Score Route
-                </Text>
-            </View>
-        </SafeAreaView>
+        <DefaultWinningScoreScreen />
     );
 };
 
