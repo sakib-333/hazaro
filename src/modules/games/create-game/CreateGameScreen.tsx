@@ -103,7 +103,7 @@ const CreateGameScreen = () => {
     return (
         <SafeAreaView
             edges={['top', 'left', 'right']}
-            className="flex-1 bg-surface"
+            className="flex-1 bg-background"
         >
             <KeyboardAvoidingView
                 style={styles.keyboardView}
