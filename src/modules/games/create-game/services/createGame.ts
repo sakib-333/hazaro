@@ -15,7 +15,6 @@ export const createGame = async ({
     playerNames,
     winningScore,
 }: CreateGameInput): Promise<Game> => {
-    const now = new Date().toISOString();
     const timestamp = Date.now();
 
     const game: Game = {
@@ -33,8 +32,8 @@ export const createGame = async ({
             winningScore,
         },
 
-        createdAt: now,
-        updatedAt: now,
+        createdAt: String(timestamp),
+        updatedAt: String(timestamp),
     };
 
     const storedGames = await AsyncStorage.getItem(GAMES_STORAGE_KEY);
