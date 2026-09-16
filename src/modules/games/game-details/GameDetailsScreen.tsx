@@ -109,111 +109,81 @@ const GameDetailsScreen = () => {
     deleteScoreSheetRef.current?.present();
   };
 
-  const handleDeleteLastScore = () => {
-    if (!gameId || !game?.rounds.length) return;
+  const handleDeleteLastScore = async () => {
+    if (!gameId || !game?.rounds.length) {
+      return;
+    }
 
-    deleteScoreSheetRef.current?.dismiss();
+    try {
+      const updatedGame = await deleteLastScore(gameId);
 
-    Alert.alert(
-      'Delete Last Score',
-      'Are you sure you want to delete the last score?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              const updatedGame = await deleteLastScore(gameId);
-              setGame(updatedGame);
-            } catch (error) {
-              console.error('Failed to delete last score:', error);
+      setGame(updatedGame);
 
-              Alert.alert(
-                'Something went wrong',
-                'Unable to delete the last score.'
-              );
-            }
-          },
-        },
-      ]
-    );
+      deleteScoreSheetRef.current?.dismiss();
+    } catch (error) {
+      console.error(
+        'Failed to delete last score:',
+        error
+      );
+    }
   };
 
-  const handleDeleteAllScores = () => {
-    if (!gameId || !game?.rounds.length) return;
+  const handleDeleteAllScores = async () => {
+    if (!gameId || !game?.rounds.length) {
+      return;
+    }
 
-    deleteScoreSheetRef.current?.dismiss();
+    try {
+      const updatedGame = await deleteAllScores(gameId);
 
-    Alert.alert(
-      'Delete All Scores',
-      'Are you sure you want to delete all score history? This action cannot be undone.',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Delete All',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              const updatedGame = await deleteAllScores(gameId);
-              setGame(updatedGame);
-            } catch (error) {
-              console.error('Failed to delete all scores:', error);
+      setGame(updatedGame);
 
-              Alert.alert(
-                'Something went wrong',
-                'Unable to delete all scores.'
-              );
-            }
-          },
-        },
-      ]
-    );
+      deleteScoreSheetRef.current?.dismiss();
+    } catch (error) {
+      console.error(
+        'Failed to delete all scores:',
+        error
+      );
+    }
   };
 
   const players = game
     ? game.players
-        .map((player) => {
-          const total = game.rounds.reduce((sum, round) => {
-            const playerScore = round.scores.find(
-              (score) => score.playerId === player.id
-            );
+      .map((player) => {
+        const total = game.rounds.reduce((sum, round) => {
+          const playerScore = round.scores.find(
+            (score) => score.playerId === player.id
+          );
 
-            return sum + (playerScore?.score ?? 0);
-          }, 0);
+          return sum + (playerScore?.score ?? 0);
+        }, 0);
 
-          return {
-            id: player.id,
-            name: player.name,
-            total,
-          };
-        })
-        .sort((a, b) => b.total - a.total)
-        .map((player, index) => ({
-          ...player,
-          rank: getRankLabel(index + 1),
-        }))
+        return {
+          id: player.id,
+          name: player.name,
+          total,
+        };
+      })
+      .sort((a, b) => b.total - a.total)
+      .map((player, index) => ({
+        ...player,
+        rank: getRankLabel(index + 1),
+      }))
     : [];
 
   const rounds = game
     ? [...game.rounds]
-        .map((round, index) => ({
-          id: round.id,
-          number: index + 1,
-          scores: game.players.map(
-            (player) =>
-              round.scores.find(
-                (score) => score.playerId === player.id
-              )?.score ?? 0
-          ),
-        }))
-        .reverse()
+      .map((round, index) => ({
+        id: round.id,
+        number: index + 1,
+        scores: game.players.map(
+          (player) =>
+            round.scores.find(
+              (score) => score.playerId === player.id
+            )?.score ?? 0
+        ),
+      }))
+      .reverse()
     : [];
 
   return (
@@ -292,11 +262,10 @@ const GameDetailsScreen = () => {
                 {players.map((player, index) => (
                   <View
                     key={player.id}
-                    className={`min-h-[34px] flex-row items-center ${
-                      index < players.length - 1
+                    className={`min-h-[34px] flex-row items-center ${index < players.length - 1
                         ? 'border-b border-border'
                         : ''
-                    }`}
+                      }`}
                   >
                     <Text className="w-[58px] px-2 text-sm leading-[19px] text-foreground">
                       {player.rank}
@@ -363,11 +332,10 @@ const GameDetailsScreen = () => {
                     rounds.map((round, roundIndex) => (
                       <View
                         key={round.id}
-                        className={`min-h-8 flex-row items-center ${
-                          roundIndex < rounds.length - 1
+                        className={`min-h-8 flex-row items-center ${roundIndex < rounds.length - 1
                             ? 'border-b border-border'
                             : ''
-                        }`}
+                          }`}
                       >
                         <Text className="w-11 px-2 text-[13px] font-semibold leading-[18px] text-foreground">
                           {round.number}
