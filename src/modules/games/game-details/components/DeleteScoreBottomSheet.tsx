@@ -1,10 +1,9 @@
 import {
-    BottomSheetBackdrop,
     BottomSheetModal,
-    BottomSheetView,
+    BottomSheetView
 } from '@gorhom/bottom-sheet';
 import { Trash2 } from 'lucide-react-native';
-import { forwardRef, useCallback, useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { useThemeColors } from '@/hooks/useThemeColors';
@@ -18,30 +17,16 @@ type DeleteScoreBottomSheetProps = {
 const DeleteScoreBottomSheet = forwardRef<BottomSheetModal, DeleteScoreBottomSheetProps>(({hasScores, onDeleteLastScore, onDeleteAllScores }, ref) => {
         const colors = useThemeColors();
 
-        const snapPoints = useMemo(() => ['40%'], []);
-
-        const renderBackdrop = useCallback(
-            (props: any) => (
-                <BottomSheetBackdrop
-                    {...props}
-                    appearsOnIndex={0}
-                    disappearsOnIndex={-1}
-                    pressBehavior="close"
-                    opacity={0.25}
-                />
-            ),
-            []
-        );
+        const snapPoints = useMemo(() => ['38%'], []);
 
         return (
             <BottomSheetModal
                 ref={ref}
                 topInset={60}
                 snapPoints={snapPoints}
-                enableDynamicSizing
-                backdropComponent={renderBackdrop}
+                enableDynamicSizing={false}
                 backgroundStyle={{
-                    backgroundColor: colors.background,
+                    backgroundColor: colors.surface,
                 }}
                 handleIndicatorStyle={{
                     backgroundColor: colors.mutedForeground,
